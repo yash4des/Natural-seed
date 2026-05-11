@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natural Seed — Fresh from the Farm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Baloo+Tamma+2:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <style>
+/* ── RESET ──────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:#f2f5da;color:#253926;overflow-x:hidden}
+img{display:block;max-width:100%}
+ul{list-style:none}
+a{text-decoration:none;color:inherit}
+button{border:none;background:none;cursor:pointer;font:inherit}
+
+/* ── TOKENS ─────────────────────────────────────── */
+:root{
+  --c-cream:#f2f5da;
+  --c-cream-off:#fefff3;
+  --c-cream-border:#edf0da;
+  --c-stripe:#eff3d2;
+  --c-green-dark:#13560b;
+  --c-green-mid:#34732d;
+  --c-green-bg:#24450b;
+  --c-green-light:#b3ddaf;
+  --c-green-accent:#b9e57a;
+  --c-text:#253926;
+  --c-text-body:#2c3f27;
+  --c-text-muted:#8e8e8e;
+  --c-text-black:#303031;
+  --pad:120px;
+  --py:96px;
+}
+@media(max-width:1023px){:root{--pad:48px;--py:72px}}
+@media(max-width:767px) {:root{--pad:20px;--py:48px}}
+
+/* ── KEYFRAMES ───────────────────────────────────── */
+@keyframes fadeUp  {from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn  {from{opacity:0}                            to{opacity:1}}
+@keyframes scaleIn {from{opacity:0;transform:scale(.9)}       to{opacity:1;transform:scale(1)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* hero load animations */
+.a-nav  {animation:slideDown .6s cubic-bezier(.22,1,.36,1) both .05s}
+.a-h1   {animation:fadeUp    .8s  cubic-bezier(.22,1,.36,1) both .3s}
+.a-sub  {animation:fadeUp    .8s  cubic-bezier(.22,1,.36,1) both .45s}
+.a-img  {animation:scaleIn   1.1s cubic-bezier(.22,1,.36,1) both .1s}
+
+/* scroll reveal */
+.r{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.r.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* word-split reveal */
+.word-outer{display:inline-block;}
+.word{display:inline-block;opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 70ms);}
+.split-reveal .word{opacity:1;transform:translateY(0);}
+/* section words — slower so they're visible mid-scroll */
+.slow-split .word{transition-duration:.95s;transition-delay:calc(200ms + var(--i) * 110ms);}
+/* story paragraph — fast cascade, ends just after the heading */
+.story-p.slow-split .word{transition-duration:.4s;transition-delay:calc(280ms + var(--i) * 12ms);}
+/* hero headline: colours applied per-word via JS inline styles */
+.hero-headline.is-split{background:none;-webkit-text-fill-color:inherit;}
+.hero-headline.is-split .word{background:none;}
+
+/* ── HERO ────────────────────────────────────────── */
+.hero{
+  position:relative;
+  min-height:100svh;
+  background:var(--c-cream);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* background pattern image — sits at top of hero */
+.bg-pattern{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:70%;
+  z-index:0;
+  pointer-events:none;
+  background:url('assets/bg-pattern.png') top center / cover no-repeat;
+  opacity:.85;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 55%,transparent 80%);
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 55%,transparent 80%);
+}
+
+/* decorative bleed images */
+.deco{position:absolute;pointer-events:none;z-index:1}
+.deco-tl{top:-10px;left:-90px;width:210px;mix-blend-mode:darken}
+.deco-tr{top:30%;right:-120px;width:300px;mix-blend-mode:darken}
+.deco-ml{top:50%;left:-110px;width:240px;mix-blend-mode:darken}
+@media(max-width:1023px){.deco-tl{width:140px;left:-40px}.deco-tr{width:190px;right:-50px;top:22%}.deco-ml{width:170px;left:-65px}}
+@media(max-width:767px) {.deco-tl,.deco-tr,.deco-ml{display:none}}
+
+/* ── NAV (centered — matches Figma) ─────────────── */
+.nav{
+  position:relative;z-index:10;
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+  padding:40px var(--pad) 0;
+}
+.nav-logo img{width:80px;height:76px;object-fit:contain}
+@media(max-width:767px){.nav-logo img{width:60px;height:57px}}
+.nav-links{display:flex;gap:32px;justify-content:center;align-items:center}
+.nav-links a{
+  font-family:'Satoshi',sans-serif;font-size:14px;font-weight:500;
+  color:var(--c-text-muted);transition:color .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--c-green-mid)}
+
+/* mobile: show hamburger, hide links */
+.hamburger{
+  display:none;position:absolute;top:40px;right:var(--pad);
+  flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:20;
+}
+.hamburger span{width:22px;height:2px;background:var(--c-green-mid);border-radius:2px;transition:.3s}
+@media(max-width:767px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+
+/* mobile drawer */
+.drawer{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:var(--c-cream);
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;
+}
+.drawer.open{display:flex}
+.drawer a{font-family:'Satoshi',sans-serif;font-size:26px;font-weight:700;color:var(--c-green-dark);transition:color .2s}
+.drawer a:hover{color:var(--c-green-mid)}
+.drawer-close{position:absolute;top:24px;right:28px;font-size:28px;cursor:pointer;color:var(--c-green-mid);line-height:1}
+.drawer-social{display:flex;gap:14px;margin-top:8px}
+.drawer-social a{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--c-cream-border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--c-green-mid);transition:background .2s;
+}
+.drawer-social a svg{width:20px;height:20px}
+
+/* hero content */
+.hero-body{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  gap:16px;
+  width:100%;
+  padding:80px var(--pad) 0;
+}
+.hero-headline{
+  font-family:'DM Sans',sans-serif;font-weight:900;
+  font-size:clamp(34px,5vw,68px);line-height:1.08;
+  font-variation-settings:'opsz' 14;
+  text-align:center;
+  background:linear-gradient(135deg,var(--c-green-light),var(--c-green-dark) 65%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  max-width:min(696px,90%);
+}
+.hero-headline em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400}
+.hero-subtitle{
+  font-family:'Inter',sans-serif;font-weight:500;
+  font-size:clamp(16px,1.8vw,24px);line-height:1.5;
+  color:var(--c-text-body);
+  text-align:center;
+  max-width:min(558px,90%);
+  margin-top:8px;
+}
+
+/* product image area */
+.hero-product{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;
+  margin-top:24px;
+}
+/* carousel outer — chevrons live here (overflow visible) */
+.carousel-outer{
+  position:relative;
+  width:min(694px,88%);
+}
+/* carousel wrap — slides clipped here */
+.carousel-wrap{
+  width:100%;
+  overflow:hidden;
+  border-radius:4px;
+}
+.carousel-track{
+  display:grid;
+}
+.carousel-slide{
+  grid-area:1/1;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+  pointer-events:none;
+}
+.carousel-slide.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.hero-img{
+  width:100%;height:auto;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 24px 60px rgba(35,78,15,.15));
+}
+.hero-img.no-shadow{filter:none;}
+
+/* carousel chevrons — positioned on carousel-outer (overflow:visible) */
+.chevron{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:24px;height:24px;
+  background:none;border:none;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:transform .2s ease,opacity .2s ease;
+  z-index:10;
+  opacity:.9;
+}
+.chevron:hover{opacity:1;transform:translateY(-50%) scale(1.08)}
+.chevron img{width:24px;height:24px;display:block;object-fit:contain}
+.chevron-l{left:-56px}
+.chevron-r{right:-56px}
+@media(max-width:900px){.chevron-l{left:-48px}.chevron-r{right:-48px}}
+@media(max-width:767px){
+  .chevron{width:24px;height:24px}
+  .chevron img{width:24px;height:24px}
+  .chevron-l{left:-40px}
+  .chevron-r{right:-40px}
+}
+
+/* ── OUR STORY ───────────────────────────────────── */
+.story{
+  position:relative;
+  width:100%;
+  padding:var(--py) var(--pad);
+  overflow:hidden;
+  background:var(--c-cream);
+}
+.story-bg{
+  position:absolute;inset:0;
+  filter:blur(1px);opacity:.85;
+}
+.story-bg img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;
+}
+.story-fade{
+  position:absolute;left:0;right:0;height:38%;
+  pointer-events:none;z-index:1;
+}
+.story-fade-t{top:0;background:linear-gradient(to bottom,var(--c-cream) 10%,transparent)}
+.story-fade-b{bottom:0;background:linear-gradient(to top,var(--c-cream) 10%,transparent)}
+.story-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:64px}
+.story-text{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.story-h{font-family:'DM Sans',sans-serif;font-weight:700;font-size:clamp(22px,2.2vw,28px);color:var(--c-green-mid);line-height:1.1;font-variation-settings:'opsz' 14}
+.story-p{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(15px,1.4vw,20px);color:#234e0f;line-height:1.8;max-width:min(1100px,100%)}
+
+/* process steps */
+.process{display:flex;align-items:flex-start;justify-content:center;width:100%;flex-wrap:wrap;gap:0 8px}
+.pstep{display:flex;flex-direction:column;align-items:center;gap:0;width:min(260px,45%);text-align:center}
+.pstep img.icon{width:80px;height:80px;object-fit:contain;margin-bottom:6px}
+.pstep-title{font-family:'Baloo Tamma 2',cursive;font-weight:700;font-size:18px;color:var(--c-text-black);margin-bottom:2px}
+.pstep-desc{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;color:var(--c-text-black);line-height:1.5}
+.parrow{display:flex;align-items:center;justify-content:center;width:220px;flex-shrink:0;margin-top:20px}
+.parrow img{width:200px;height:auto;display:block}
+.parrow.flip{transform:scaleY(-1)}
+/* arrows hidden + 2-row grid from 1380px downward — no exceptions */
+@media(max-width:1380px){
+  .parrow{display:none !important;}
+  .process{gap:40px 48px;}
+  .pstep{width:min(280px,44%);}
+}
+@media(max-width:1023px){
+  .pstep{width:min(240px,44%);}
+}
+@media(max-width:767px){
+  .process{flex-direction:column;align-items:center;gap:24px;}
+  .pstep{width:100%;}
+}
+
+/* ── NATURAL INGREDIENTS ─────────────────────────── */
+/* ── INGREDIENTS — sticky horizontal scroll ─────── */
+.ingredients{background:var(--c-cream-off);padding:0;position:relative;}
+.ingr-wheat-deco{position:absolute;top:-20px;right:-20px;width:clamp(180px,20vw,300px);pointer-events:none;user-select:none;z-index:0;}
+.ingr-wheat-deco img{width:100%;display:block;}
+@media(max-width:768px){.ingr-wheat-deco{width:140px;right:-10px;}}
+@media(max-width:480px){.ingr-wheat-deco{display:none;}}
+.ingr-sticky{
+  position:sticky;top:40px;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:visible;padding:100px 0;gap:48px;
+}
+/* ingredients header */
+.ingr-header{display:flex;flex-direction:column;gap:16px;padding:0 var(--pad);}
+.sec-title{
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:clamp(26px,3.5vw,56px);line-height:1.1;
+  font-variation-settings:'opsz' 14;
+  background:linear-gradient(to right,var(--c-green-light),var(--c-green-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  max-width:527px;
+}
+.sec-title em{font-family:'DM Serif Display',serif;font-style:italic}
+/* per-word colours on ingredients title */
+.sec-title.is-split{background:none;-webkit-text-fill-color:inherit;}
+.sec-title.is-split .word{background:none;}
+.ingr-desc{
+  font-family:'Inter',sans-serif;font-weight:500;
+  font-size:clamp(14px,1.3vw,20px);color:#2c3f27;
+  line-height:1.5;max-width:527px;
+}
+/* section-hdr used by Products + Reviews */
+.section-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-bottom:52px;flex-wrap:wrap;padding:0 var(--pad)}
+.sec-sub{font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(14px,1.3vw,18px);color:var(--c-text-body);line-height:1.5;max-width:380px;text-align:right}
+@media(max-width:767px){.section-hdr{flex-direction:column}.sec-sub{text-align:left;max-width:100%}}
+/* rail */
+.ingr-rail-wrap{width:100%;overflow:hidden;}
+.ingr-rail{display:flex;gap:48px;padding:0 var(--pad);will-change:transform;}
+.ingr-item{flex:0 0 234px;display:flex;flex-direction:column;align-items:center;gap:19px;}
+.ingr-bowl{width:234px;height:240px;flex-shrink:0;}
+.ingr-bowl img{width:100%;height:100%;object-fit:contain;display:block;}
+.ingr-label{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(16px,1.4vw,24px);color:#373737;text-align:center;line-height:1.1;}
+@media(max-width:767px){
+  .ingr-sticky{gap:40px;padding:48px 0;}
+}
+
+/* ── PRODUCTS ────────────────────────────────────── */
+.products{background:#F2F5DA;padding:var(--py) var(--pad);border-top:1px solid var(--c-cream-border);position:relative;overflow:hidden}
+.products-deco{position:absolute;left:0;top:50%;transform:translateY(-30%);pointer-events:none;user-select:none;}
+.products-deco img{width:clamp(180px,22vw,340px);height:auto;display:block;opacity:0.35;mix-blend-mode:multiply;}
+@media(max-width:900px){.products-deco img{width:260px;opacity:0.25;}}
+@media(max-width:600px){.products-deco{display:none;}}
+.prod-hdr{margin-bottom:36px;}
+.tabs{display:flex;gap:12px;margin-bottom:36px;flex-wrap:wrap}
+.tab{
+  display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;
+  border-radius:8px;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s;
+}
+.tab.active{background:#e8f0d2;border-color:#c8dda0}
+.tab-lbl{font-family:'Satoshi',sans-serif;font-weight:700;font-size:15px;color:#3f3f46}
+.tab.active .tab-lbl{color:var(--c-green-mid)}
+.tab-cnt{background:#fafafa;border:1px solid #e4e4e7;padding:2px 10px;border-radius:999px;font-family:'Inter',sans-serif;font-weight:500;font-size:13px;color:#3f3f46}
+
+/* tab panels */
+.prod-panel{display:none}
+.prod-panel.active{display:block}
+
+/* grid layout (milled flour + grain flour) */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:1100px){.prod-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px) {.prod-grid{grid-template-columns:1fr}}
+
+/* horizontal rail */
+.prod-panel{margin-left:calc(-1 * var(--pad));margin-right:calc(-1 * var(--pad));}
+.prod-rail{display:flex;gap:24px;overflow-x:auto;padding-left:var(--pad);padding-right:var(--pad);padding-bottom:4px;scroll-snap-type:x start;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.prod-rail::-webkit-scrollbar{display:none;}
+.prod-rail .card{flex:0 0 280px;scroll-snap-align:start;}
+
+.card{position:relative;border-radius:20px;overflow:hidden;height:380px}
+.card-product{
+  background:#FEFFF3;border:2px solid #EDF0DA;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding-bottom:24px;
+}
+.card-cta{background:var(--c-green-bg);padding:32px 24px;display:flex;flex-direction:column;justify-content:space-between}
+.card-badge{
+  position:absolute;top:12px;left:12px;
+  background:var(--c-cream);border:1px solid var(--c-cream-border);
+  border-radius:999px;padding:6px 14px;
+  font-family:'Satoshi',sans-serif;font-weight:500;font-size:12px;color:var(--c-text);
+  white-space:nowrap;z-index:1;
+}
+.card-img{
+  width:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;
+  padding:40px 10px 0;
+}
+.card-img img{width:100%;height:100%;object-fit:contain;max-height:320px;}
+.card-pname{font-family:'Satoshi',sans-serif;font-weight:700;font-size:16px;color:#000;text-align:center;padding:0 12px}
+.card-pqty {font-family:'Satoshi',sans-serif;font-weight:500;font-size:14px;color:var(--c-text-muted);text-align:center;margin-top:3px}
+.card-sizes{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px;padding:0 12px}
+.card-size-tag{font-family:'Satoshi',sans-serif;font-weight:600;font-size:12px;color:var(--c-green-mid);background:#e8f5e0;border:1.5px solid #b3ddaf;border-radius:999px;padding:4px 12px;white-space:nowrap}
+.cta-title{font-family:'DM Sans',sans-serif;font-weight:500;font-size:clamp(20px,2vw,26px);color:var(--c-green-accent);line-height:1.2;font-variation-settings:'opsz' 14}
+.cta-desc{font-family:'DM Sans',sans-serif;font-weight:300;font-style:italic;font-size:14px;color:var(--c-cream);line-height:1.6;margin-top:14px;font-variation-settings:'opsz' 14}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--c-green-accent);border-radius:999px;padding:10px 20px;
+  cursor:pointer;align-self:flex-end;margin-top:auto;
+  transition:transform .2s,background .2s;
+}
+.cta-btn:hover{transform:translateY(-2px);background:#c5f085}
+.cta-btn-icon{width:18px;height:18px;flex-shrink:0}
+.cta-btn span{font-family:'Satoshi',sans-serif;font-weight:500;font-size:14px;color:var(--c-text);white-space:nowrap}
+
+/* ── STATS ───────────────────────────────────────── */
+.stats{
+  background:var(--c-cream);
+  padding:72px var(--pad);
+  display:flex;gap:0;justify-content:center;align-items:stretch;
+  flex-wrap:wrap;
+  border-top:1px solid var(--c-cream-border);
+}
+.stat{
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  padding:32px 48px;
+  border-right:1px solid var(--c-cream-border);
+  flex:1;min-width:180px;
+}
+.stat:last-child{border-right:none}
+@media(max-width:767px){.stat{border-right:none;border-bottom:1px solid var(--c-cream-border);width:100%;flex:none}.stat:last-child{border-bottom:none}}
+.stat-n{font-family:'Satoshi',sans-serif;font-weight:900;font-size:clamp(32px,3.5vw,48px);color:#185a11;line-height:1.1}
+.stat-l{font-family:'Satoshi',sans-serif;font-weight:500;font-size:clamp(13px,1.1vw,16px);color:#185a11;opacity:.75;margin-top:4px}
+
+/* ── REVIEWS ─────────────────────────────────────── */
+.reviews{background:var(--c-cream);padding-bottom:0;overflow:hidden}
+.reviews-heading{
+  padding:60px var(--pad) 32px;
+  font-family:'DM Sans',sans-serif;font-weight:700;
+  font-size:clamp(22px,2.5vw,32px);color:var(--c-green-mid);
+  font-variation-settings:'opsz' 14;
+}
+.rev-row{display:flex;gap:20px;padding-bottom:20px}
+.rev-row-1{margin-left:-48px}
+.rev-row-2{margin-left:36px}
+@media(max-width:767px){
+  .rev-row{flex-direction:column;padding:0 var(--pad) 20px;margin-left:0!important}
+}
+.rev-card{
+  background:#fff;
+  border:1.5px solid var(--c-cream-border);border-radius:20px;
+  padding:24px 28px;width:440px;min-width:300px;flex-shrink:0;
+  display:flex;flex-direction:column;gap:10px;
+}
+@media(max-width:767px){.rev-card{width:100%;min-width:0}}
+.rev-stars{display:flex;gap:3px;color:#f5a623;font-size:18px;letter-spacing:1px}
+.rev-text{font-family:'Satoshi',sans-serif;font-weight:500;font-size:15px;color:#111;line-height:1.65}
+.rev-author{font-family:'Satoshi',sans-serif;font-weight:700;font-size:14px;color:#24450b}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{
+  background:#31511f;
+  padding:64px var(--pad) 40px;
+}
+.ft-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  flex-wrap:wrap;gap:40px;padding-bottom:40px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.ft-brand{display:flex;flex-direction:column;gap:16px}
+.ft-logo img{height:60px;width:auto;opacity:.92;filter:brightness(0) invert(1)}
+.ft-tagline{font-family:'Satoshi',sans-serif;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;max-width:260px}
+.ft-nav{display:flex;flex-direction:column;gap:12px}
+.ft-nav-title{font-family:'Satoshi',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
+.ft-links{display:flex;flex-direction:column;gap:10px}
+.ft-links a{font-family:'Satoshi',sans-serif;font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s}
+.ft-links a:hover{color:#fff}
+.ft-social-col{display:flex;flex-direction:column;gap:12px}
+.ft-social-title{font-family:'Satoshi',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
+.ft-social{display:flex;gap:10px}
+.ft-social a{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);
+  transition:background .2s,color .2s;
+}
+.ft-social a:hover{background:rgba(255,255,255,.25);color:#fff}
+.ft-social svg{width:18px;height:18px}
+.ft-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:28px;flex-wrap:wrap;gap:12px;
+}
+.ft-copy{font-family:'Satoshi',sans-serif;font-size:13px;color:rgba(255,255,255,.35)}
+.ft-cert{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);border-radius:999px;
+  padding:6px 14px;
+  font-family:'Satoshi',sans-serif;font-size:12px;color:rgba(255,255,255,.5);
+}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="bg-pattern" aria-hidden="true"></div>
+
+  <!-- Decorative bleeds -->
+  <div class="deco deco-tl">
+    <img src="assets/deco-tl.png" alt="" style="transform:rotate(12deg)">
+  </div>
+  <div class="deco deco-tr">
+    <img src="assets/deco-tr.png" alt="" style="transform:rotate(-30deg)">
+  </div>
+  <div class="deco deco-ml">
+    <img src="assets/deco-ml.png" alt="" style="transform:rotate(-36.44deg)">
+  </div>
+
+  <!-- NAV — centered: logo above, links below -->
+  <nav class="nav a-nav">
+    <a href="#home" class="nav-logo">
+      <img src="assets/logo.png" alt="Natural Seed">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#story">About</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#reviews">Review</a></li>
+    </ul>
+  </nav>
+
+  <!-- Mobile hamburger (absolutely positioned top-right) -->
+  <div class="hamburger" id="hbg" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- HERO CONTENT (centered) -->
+  <div class="hero-body">
+    <h1 class="hero-headline">
+      Fresh from the farm
+      <em> honest to the core</em>
+    </h1>
+    <p class="hero-subtitle">
+      Fresh and pure produce for your health — sourced directly from Indian farms.
+    </p>
+
+    <!-- Carousel -->
+    <div class="hero-product a-img">
+      <div class="carousel-outer">
+        <!-- Chevrons outside overflow:hidden so they're never clipped -->
+        <button class="chevron chevron-l" id="prevBtn" aria-label="Previous">
+          <img src="assets/chevron-l.png" alt="">
+        </button>
+        <button class="chevron chevron-r" id="nextBtn" aria-label="Next">
+          <img src="assets/chevron-r.png" alt="">
+        </button>
+
+        <div class="carousel-wrap">
+          <!-- 2 slides — crossfade dissolve -->
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide active">
+              <img class="hero-img" src="assets/hero-image.png" alt="Shivam Bhog Mustard Oil — 100% Pure">
+            </div>
+            <div class="carousel-slide">
+              <img class="hero-img no-shadow" src="assets/hero-image-2.png" alt="Shivam Bhog Chakki Fresh Atta — 100% Wheat">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OUR STORY ══════════════════════ -->
+<section class="story" id="story">
+  <div class="story-bg">
+    <img src="assets/story-bg-2.png" alt="">
+  </div>
+  <div class="story-fade story-fade-t"></div>
+  <div class="story-fade story-fade-b"></div>
+
+  <div class="story-inner">
+    <div class="story-text r">
+      <p class="story-h">Our story</p>
+      <p class="story-p">
+        We are an FMCG company delivering pure, healthy, and FSSAI-certified edible products
+        like mustard oil and wheat flour. We source fresh wheat and mustard seeds directly from
+        farmers and process them in our advanced plant in Gurugram to produce high-quality
+        Shivam Bhog Chakki Atta and Shivam Mustard Oil. By paying farmers fair prices, we
+        support their livelihood while ensuring freshness for our customers. Unlike traditional
+        supply chains involving middlemen and long storage periods, our approach avoids harmful
+        pesticides and preserves the natural quality of the products.
+      </p>
+    </div>
+
+    <div class="process">
+      <div class="pstep r d1">
+        <img class="icon" src="assets/icon-farm-new.png" alt="Farm">
+        <p class="pstep-title">Direct from farms</p>
+        <p class="pstep-desc">We procure wheat farm-fresh, straight from the farmers</p>
+      </div>
+      <div class="parrow r d1">
+        <img src="assets/arrow-new.png" alt="">
+      </div>
+      <div class="pstep r d2">
+        <img class="icon" src="assets/icon-plant.svg" alt="Plant">
+        <p class="pstep-title">Produce in our plant</p>
+        <p class="pstep-desc">Our state-of-the-art plant in Haryana</p>
+      </div>
+      <div class="parrow flip r d2">
+        <img src="assets/arrow-new.png" alt="">
+      </div>
+      <div class="pstep r d3">
+        <img class="icon" src="assets/icon-health.svg" alt="Delivery">
+        <p class="pstep-title">Delivers to you</p>
+        <p class="pstep-desc">Our products are 100% pure and hygienic</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NATURAL INGREDIENTS ════════════ -->
+<section class="ingredients" id="ingredients">
+  <div class="ingr-sticky">
+  <div class="ingr-wheat-deco" aria-hidden="true"><img src="assets/ingr-wheat-deco.png" alt=""></div>
+<div class="ingr-header r">
+      <p class="sec-title" id="ingrTitle">Natural Ingrediants <em>for Natural Health!</em></p>
+      <p class="ingr-desc">Fresh and pure produce for your health — sourced directly from Indian farms.</p>
+    </div>
+    <div class="ingr-rail-wrap" id="ingrRailWrap">
+      <div class="ingr-rail" id="ingrRail">
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-gehu.png" alt="Gehu (Wheat)"></div>
+          <p class="ingr-label">Gehu (Wheat)</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-makka.png" alt="Makka"></div>
+          <p class="ingr-label">Makka</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-bajra.png" alt="Bajra"></div>
+          <p class="ingr-label">Bajra</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-alsi.png" alt="Alsi (Flex seed)"></div>
+          <p class="ingr-label">Alsi (Flex seed)</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-ragi.png" alt="Ragi"></div>
+          <p class="ingr-label">Ragi</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-wheat1.png" alt="Jau"></div>
+          <p class="ingr-label">Jau</p>
+        </div>
+        <div class="ingr-item">
+          <div class="ingr-bowl"><img src="assets/ingr-wheat2.png" alt="Jowar"></div>
+          <p class="ingr-label">Jowar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRODUCTS ════════════════════════ -->
+<section class="products" id="products">
+  <div class="products-deco" aria-hidden="true"><img src="assets/products-bg-deco.png" alt=""></div>
+  <div class="prod-hdr r">
+    <p class="sec-title" id="prodTitle">What our brand <em>offers you</em></p>
+  </div>
+  <div class="tabs r">
+    <div class="tab active" data-tab="oil"><span class="tab-lbl">Mustard Oil</span><span class="tab-cnt">5</span></div>
+    <div class="tab" data-tab="flour"><span class="tab-lbl">Chakki Atta</span><span class="tab-cnt">6</span></div>
+    <div class="tab" data-tab="grain"><span class="tab-lbl">Specialty Flour</span><span class="tab-cnt">5</span></div>
+  </div>
+
+  <!-- ── Mustard Oil panel ── -->
+  <div class="prod-panel active" id="panel-oil">
+    <div class="prod-rail">
+      <div class="card card-product r"><div class="card-badge">100% Pure</div><div class="card-img"><img src="assets/oil-black-1l.png" alt="Shivam Brand Black Mustard Oil 1 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">1 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Yellow Mustard</div><div class="card-img"><img src="assets/oil-yellow-1l.png" alt="Shivam Brand Yellow Mustard Oil"></div><p class="card-pname">Shivam Brand Yellow Mustard Oil</p><p class="card-pqty">1 Litre, 2 Litre, 5 Litre, 15 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><img src="assets/oil-black-2l.png" alt="Shivam Brand Black Mustard Oil 2 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">2 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Family Pack</div><div class="card-img"><img src="assets/oil-black-5l.png" alt="Shivam Brand Black Mustard Oil 5 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">5 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Bulk Pack</div><div class="card-img"><img src="assets/oil-black-15l.png" alt="Shivam Brand Black Mustard Oil 15 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">15 Litre</p></div>
+    </div>
+  </div>
+
+  <!-- ── Milled Flour panel ── -->
+  <div class="prod-panel" id="panel-flour">
+    <div class="prod-rail">
+      <div class="card card-cta r">
+        <div>
+          <p class="cta-title">We can customise your flour blend — just ask.</p>
+          <p class="cta-desc">Want more bajra? Less maida? A diabetic-friendly mix? Tell us and we mill it fresh for you.</p>
+        </div>
+        <a href="https://wa.me/919999999999" class="cta-btn" target="_blank" rel="noopener">
+          <svg class="cta-btn-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="color:#253926"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>Request on WhatsApp</span>
+        </a>
+      </div>
+      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><img src="assets/flour-chakki.png" alt="Fresh Chakki Flour"></div><p class="card-pname">Fresh Chakki Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% MP Wheat</div><div class="card-img"><img src="assets/flour-mp-sharbati.png" alt="MP Sharbati Flour"></div><p class="card-pname">MP Sharbati Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Healthy Mix</div><div class="card-img"><img src="assets/flour-multigrain.png" alt="Multigrain Flour"></div><p class="card-pname">Multigrain Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Rice</div><div class="card-img"><img src="assets/flour-rice.png" alt="Rice Flour"></div><p class="card-pname">Rice Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Makka</div><div class="card-img"><img src="assets/flour-makka.png" alt="Makka Flour"></div><p class="card-pname">Makka Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Bajra</div><div class="card-img"><img src="assets/flour-bajra.png" alt="Bajra Flour"></div><p class="card-pname">Bajra Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+    </div>
+  </div>
+
+  <!-- ── Grain Flour panel ── -->
+  <div class="prod-panel" id="panel-grain">
+    <div class="prod-rail">
+      <div class="card card-product r"><div class="card-badge">Pure Besan</div><div class="card-img"><img src="assets/grain-besan.png" alt="Chana Besan"></div><p class="card-pname">Chana Besan</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">High Protein</div><div class="card-img"><img src="assets/grain-sattu.png" alt="Chana Sattu"></div><p class="card-pname">Chana Sattu</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><img src="assets/grain-ragi.png" alt="Ragi Atta"></div><p class="card-pname">Ragi Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Gluten Free</div><div class="card-img"><img src="assets/grain-jwar.png" alt="Jowar Atta"></div><p class="card-pname">Jowar Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><img src="assets/grain-jau.png" alt="Jau Atta"></div><p class="card-pname">Jau Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS ════════════════════════════ -->
+<section class="stats" id="stats">
+  <div class="stat r">
+    <p class="stat-n">5000+</p>
+    <p class="stat-l">Happy Customers</p>
+  </div>
+  <div class="stat r d1">
+    <p class="stat-n">10 Years</p>
+    <p class="stat-l">In Business Since 2016</p>
+  </div>
+  <div class="stat r d2">
+    <p class="stat-n">5.0 ★</p>
+    <p class="stat-l">Google Rating</p>
+  </div>
+  <div class="stat r d3">
+    <p class="stat-n">100%</p>
+    <p class="stat-l">FSSAI Certified</p>
+  </div>
+</section>
+
+<!-- ═══════════════ REVIEWS ══════════════════════════ -->
+<section class="reviews" id="reviews">
+  <p class="reviews-heading r">What our customers say</p>
+
+  <!-- Row 1 (offset left) -->
+  <div class="rev-row rev-row-1">
+    <div class="rev-card r">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
+      <p class="rev-author">— Aditya Kumar</p>
+    </div>
+    <div class="rev-card r d1">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Bohot achha atta milta hai yahan se. Pure mustard oil bhi milta hai. Family ke liye best quality products hain. Highly recommend karta hoon.</p>
+      <p class="rev-author">— Rajesh Sharma</p>
+    </div>
+    <div class="rev-card r d2">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Fresh and pure atta. My family loved it. The mustard oil is very pure and aromatic. Will definitely order again!</p>
+      <p class="rev-author">— Priya Verma</p>
+    </div>
+    <div class="rev-card r d3">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Shivam Bhog products are amazing! The atta makes such soft rotis and the sarso tel is pure and fragrant. Best brand for pure products.</p>
+      <p class="rev-author">— Suneeta Gupta</p>
+    </div>
+  </div>
+
+  <!-- Row 2 (offset right) -->
+  <div class="rev-row rev-row-2">
+    <div class="rev-card r">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
+      <p class="rev-author">— Manish Kumar</p>
+    </div>
+    <div class="rev-card r d1">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Kafi tagde products hain yahan ke. Chakki atta bilkul fresh aata hai. Sarson ka tel bhi ghara hua jaisa lagta hai. Bahut accha!</p>
+      <p class="rev-author">— Amit Singh</p>
+    </div>
+    <div class="rev-card r d2">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Best quality products in the market. The multigrain atta is perfect for health-conscious families. Highly recommend!</p>
+      <p class="rev-author">— Neeta Jain</p>
+    </div>
+    <div class="rev-card r d3">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">Farm fresh se seedha ghar tak — yahi toh baat hai Shivam Bhog ki. No adulteration, no compromise. 5 stars deserved!</p>
+      <p class="rev-author">— Deepak Yadav</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ════════════════════════════ -->
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-logo">
+        <img src="assets/logo.png" alt="Natural Seed">
+      </div>
+      <p class="ft-tagline">Farm-fresh produce delivered honest — no middlemen, no compromises.</p>
+    </div>
+
+    <div class="ft-nav">
+      <p class="ft-nav-title">Quick Links</p>
+      <nav class="ft-links">
+        <a href="#home">Home</a>
+        <a href="#story">Our Story</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#products">Products</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+    </div>
+
+    <div class="ft-social-col">
+      <p class="ft-social-title">Follow us</p>
+      <div class="ft-social">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/919999999999" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2024 Shivam Bhog Natural Seed. All rights reserved.</p>
+    <span class="ft-cert">✓ FSSAI Certified</span>
+  </div>
+</footer>
+
+<!-- Mobile drawer -->
+<div class="drawer" id="drawer">
+  <span class="drawer-close" id="drawerClose">&#x2715;</span>
+  <a href="#home"        onclick="closeDrawer()">Home</a>
+  <a href="#story"       onclick="closeDrawer()">About</a>
+  <a href="#products"    onclick="closeDrawer()">Products</a>
+  <a href="#reviews"     onclick="closeDrawer()">Review</a>
+  <div class="drawer-social">
+    <a href="#" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="https://wa.me/919999999999" aria-label="WhatsApp" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<script>
+  /* ── Mobile drawer ── */
+  const hbg    = document.getElementById('hbg');
+  const drawer = document.getElementById('drawer');
+  const dc     = document.getElementById('drawerClose');
+  function openDrawer()  { drawer.classList.add('open');    document.body.style.overflow='hidden'; }
+  function closeDrawer() { drawer.classList.remove('open'); document.body.style.overflow=''; }
+  hbg.addEventListener('click', openDrawer);
+  dc.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+
+  /* ── Carousel (right-to-left only, seamless infinite loop) ── */
+  (function() {
+    const slides    = Array.from(document.querySelectorAll('#carouselTrack .carousel-slide'));
+    const total     = slides.length;
+    let   current   = 0;
+    let   busy      = false;
+    let   autoTimer;
+
+    function goTo(idx) {
+      if (busy || idx === current) return;
+      busy = true;
+      slides[current].classList.remove('active');
+      current = (idx + total) % total;
+      slides[current].classList.add('active');
+      setTimeout(() => { busy = false; }, 1000); // match CSS transition duration
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(next, 4000);
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => { next(); resetAuto(); });
+    document.getElementById('prevBtn').addEventListener('click', () => { prev(); resetAuto(); });
+
+    /* Swipe support */
+    let tx = 0;
+    const track = document.getElementById('carouselTrack');
+    track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); resetAuto(); }
+    }, { passive: true });
+
+    resetAuto();
+  })();
+
+  /* ── Word split ── */
+  function splitWords(el) {
+    let i = 0;
+    function walk(node) {
+      if (node.nodeType === 3) {
+        const parts = node.textContent.split(/(\s+)/);
+        const frag  = document.createDocumentFragment();
+        parts.forEach(p => {
+          if (!p.trim()) { frag.appendChild(document.createTextNode(p)); return; }
+          const outer = document.createElement('span');
+          outer.className = 'word-outer';
+          const inner = document.createElement('span');
+          inner.className = 'word';
+          inner.style.setProperty('--i', i++);
+          inner.textContent = p;
+          outer.appendChild(inner);
+          frag.appendChild(outer);
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1) {
+        Array.from(node.childNodes).forEach(walk);
+      }
+    }
+    Array.from(el.childNodes).forEach(walk);
+  }
+
+  // Hero headline — split + gradient-per-word + staggered reveal
+  const heroH1  = document.querySelector('.hero-headline');
+  const heroSub = document.querySelector('.hero-subtitle');
+  splitWords(heroH1);
+  splitWords(heroSub);
+  heroH1.classList.add('is-split');
+  // Apply per-word colours (inline style beats any CSS rule)
+  const wordColors = ['#AED9A9','#7EB079','#558E4F','#387531','#9BC996','#6BA066','#599153','#437F3D'];
+  heroH1.querySelectorAll('.word').forEach((w, i) => {
+    w.style.setProperty('-webkit-text-fill-color', wordColors[i] ?? '#387531');
+    w.style.color = wordColors[i] ?? '#387531';
+  });
+  // Two rAFs ensure initial opacity:0 state is painted before transition starts
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    setTimeout(() => heroH1.classList.add('split-reveal'),  80);
+    setTimeout(() => heroSub.classList.add('split-reveal'), 520);
+  }));
+
+  // Section headings — split now, slow class for paced reveal
+  const SPLIT_SEL = '.sec-title, .story-h, .story-p, .pstep-title, .reviews-heading';
+  document.querySelectorAll(SPLIT_SEL).forEach(el => {
+    splitWords(el);
+    el.classList.add('slow-split');
+  });
+
+  /* ── Parallax (multi-layer x+y drift) ── */
+  const heroSection = document.querySelector('.hero');
+  const parallaxMap = [
+    { el: document.querySelector('.bg-pattern'), sy: 0.45, sx: 0     },
+    { el: document.querySelector('.deco-tl'),    sy: 0.18, sx: -0.06 },
+    { el: document.querySelector('.deco-tr'),    sy: 0.36, sx:  0.07 },
+    { el: document.querySelector('.deco-ml'),    sy: 0.28, sx: -0.07 },
+  ];
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > heroSection.offsetHeight) return;
+    parallaxMap.forEach(({ el, sy, sx }) => {
+      if (el) el.style.transform = `translate(${y * sx}px, ${y * sy}px)`;
+    });
+  }, { passive: true });
+
+  /* ── Scroll reveal — fade in sections at 8% ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+  /* ── Split reveal — fires at 40% so animation plays while section is well in view ── */
+  const splitRevealIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('split-reveal'); splitRevealIO.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll(SPLIT_SEL).forEach(el => splitRevealIO.observe(el));
+
+  /* ── Ingredients title per-word colours ── */
+  const ingrTitle = document.getElementById('ingrTitle');
+  if (ingrTitle) {
+    ingrTitle.classList.add('is-split');
+    const ingrColors = ['#AED9A9','#7EB079','#558E4F','#387531','#437F3D'];
+    ingrTitle.querySelectorAll('.word').forEach((w, i) => {
+      const c = ingrColors[i] ?? '#387531';
+      w.style.setProperty('-webkit-text-fill-color', c);
+      w.style.color = c;
+    });
+  }
+
+  /* ── Ingredients horizontal scroll (scroll-driven only) ── */
+  (function() {
+    const section = document.getElementById('ingredients');
+    const rail    = document.getElementById('ingrRail');
+    const wrap    = document.getElementById('ingrRailWrap');
+    if (!section || !rail || !wrap) return;
+
+    let targetX = 0, currentX = 0, rafId = null;
+
+    function maxX() { return Math.max(0, rail.scrollWidth - wrap.offsetWidth); }
+
+    function setHeight() {
+      section.style.minHeight = (window.innerHeight + maxX() * 1.1) + 'px';
+    }
+    setHeight();
+    window.addEventListener('resize', setHeight, { passive: true });
+
+    function tick() {
+      currentX += (targetX - currentX) * 0.06;
+      rail.style.transform = `translateX(-${currentX}px)`;
+      if (Math.abs(targetX - currentX) > 0.15) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rail.style.transform = `translateX(-${targetX}px)`;
+        currentX = targetX;
+        rafId = null;
+      }
+    }
+    function kick() { if (!rafId) rafId = requestAnimationFrame(tick); }
+
+    window.addEventListener('scroll', () => {
+      const rect = section.getBoundingClientRect();
+      const extra = section.offsetHeight - window.innerHeight;
+      if (extra <= 0) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / extra));
+      targetX = progress * maxX();
+      kick();
+    }, { passive: true });
+  })();
+
+  /* ── Tab switching ── */
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.prod-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel = document.getElementById('panel-' + tab.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ── Products title per-word colours ── */
+  const prodTitle = document.getElementById('prodTitle');
+  if (prodTitle) {
+    splitWords(prodTitle);
+    prodTitle.classList.add('is-split');
+    const prodColors = ['#AED9A9','#7EB079','#558E4F','#387531','#9BC996','#6BA066'];
+    prodTitle.querySelectorAll('.word').forEach((w, i) => {
+      const c = prodColors[i] ?? '#387531';
+      w.style.setProperty('-webkit-text-fill-color', c);
+      w.style.color = c;
+    });
+    splitRevealIO.observe(prodTitle);
+  }
+</script>
+</body>
+</html>
