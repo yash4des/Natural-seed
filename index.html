@@ -665,6 +665,23 @@ footer{
   .ft-watermark{width:100%}
   footer{padding-bottom:60px}
 }
+  /* ── Custom cursor dot ── */
+  .cursor-dot{
+    position:fixed;
+    top:0;left:0;
+    width:10px;height:10px;
+    background:#4C8444;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99999;
+    transform:translate(-50%,-50%);
+    transition:opacity .3s,transform .15s;
+    opacity:0;
+    mix-blend-mode:multiply;
+  }
+  .cursor-dot.visible{opacity:1;}
+  .cursor-dot.clicking{transform:translate(-50%,-50%) scale(1.8);}
+  @media(hover:none){.cursor-dot{display:none;}}
   </style>
 </head>
 <body>
@@ -1517,6 +1534,47 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   }, { threshold: 0.5 });
 
   statEls.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<!-- Custom cursor dot -->
+<div class="cursor-dot" id="cursorDot"></div>
+<script>
+(function(){
+  const dot = document.getElementById('cursorDot');
+  let mouseX = 0, mouseY = 0;
+  let dotX = 0, dotY = 0;
+  let rafId = null;
+  let inside = false;
+
+  document.addEventListener('mousemove', function(e){
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if(!inside){ inside = true; dot.classList.add('visible'); }
+    if(!rafId) rafId = requestAnimationFrame(loop);
+  });
+
+  document.addEventListener('mouseleave', function(){
+    inside = false;
+    dot.classList.remove('visible');
+  });
+
+  document.addEventListener('mousedown', function(){ dot.classList.add('clicking'); });
+  document.addEventListener('mouseup',   function(){ dot.classList.remove('clicking'); });
+
+  function loop(){
+    dotX += (mouseX - dotX) * 0.18;
+    dotY += (mouseY - dotY) * 0.18;
+    dot.style.left = dotX + 'px';
+    dot.style.top  = dotY + 'px';
+    if(Math.abs(mouseX - dotX) > 0.3 || Math.abs(mouseY - dotY) > 0.3){
+      rafId = requestAnimationFrame(loop);
+    } else {
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+      rafId = null;
+    }
+  }
 })();
 </script>
 </body>
