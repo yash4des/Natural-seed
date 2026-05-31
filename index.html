@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/180.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/192.png">
+  <link rel="preload" as="image" href="assets/hero-image.webp" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&family=Baloo+Tamma+2:wght@700;800&display=swap" rel="stylesheet">
@@ -90,7 +91,7 @@ button{border:none;background:none;cursor:pointer;font:inherit}
   height:70%;
   z-index:0;
   pointer-events:none;
-  background:url('assets/bg-pattern.png') top center / cover no-repeat;
+  background:url('assets/bg-pattern.webp') top center / cover no-repeat;
   opacity:.85;
   mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 55%,transparent 80%);
   -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 55%,transparent 80%);
@@ -496,13 +497,13 @@ footer{
 
   <!-- Decorative bleeds -->
   <div class="deco deco-tl">
-    <img src="assets/deco-tl.png" alt="" style="transform:rotate(12deg)">
+    <picture><source srcset="assets/deco-tl.webp" type="image/webp"><img src="assets/deco-tl.png" alt="" style="transform:rotate(12deg)"></picture>
   </div>
   <div class="deco deco-tr">
-    <img src="assets/deco-tr.png" alt="" style="transform:rotate(-30deg)">
+    <picture><source srcset="assets/deco-tr.webp" type="image/webp"><img src="assets/deco-tr.png" alt="" style="transform:rotate(-30deg)"></picture>
   </div>
   <div class="deco deco-ml">
-    <img src="assets/deco-ml.png" alt="" style="transform:rotate(-36.44deg)">
+    <picture><source srcset="assets/deco-ml.webp" type="image/webp"><img src="assets/deco-ml.png" alt="" style="transform:rotate(-36.44deg)"></picture>
   </div>
 
   <!-- NAV — centered: logo above, links below -->
@@ -548,10 +549,16 @@ footer{
           <!-- 2 slides — crossfade dissolve -->
           <div class="carousel-track" id="carouselTrack">
             <div class="carousel-slide active">
-              <img class="hero-img" src="assets/hero-image.png" alt="Shivam Bhog Mustard Oil — 100% Pure">
+              <picture>
+                <source srcset="assets/hero-image.webp" type="image/webp">
+                <img class="hero-img" src="assets/hero-image.png" alt="Shivam Bhog Mustard Oil — 100% Pure" fetchpriority="high">
+              </picture>
             </div>
             <div class="carousel-slide">
-              <img class="hero-img no-shadow" src="assets/hero-image-2.png" alt="Shivam Bhog Chakki Fresh Atta — 100% Wheat">
+              <picture>
+                <source srcset="assets/hero-image-2.webp" type="image/webp">
+                <img class="hero-img no-shadow" src="assets/hero-image-2.png" alt="Shivam Bhog Chakki Fresh Atta — 100% Wheat" loading="lazy">
+              </picture>
             </div>
           </div>
         </div>
@@ -563,7 +570,10 @@ footer{
 <!-- ═══════════════ OUR STORY ══════════════════════ -->
 <section class="story" id="story">
   <div class="story-bg">
-    <img src="assets/story-bg-2.png" alt="">
+    <picture>
+      <source srcset="assets/story-bg-2.webp" type="image/webp">
+      <img src="assets/story-bg-2.png" alt="" loading="lazy">
+    </picture>
   </div>
   <div class="story-fade story-fade-t"></div>
   <div class="story-fade story-fade-b"></div>
@@ -584,7 +594,7 @@ footer{
 
     <div class="process">
       <div class="pstep r d1">
-        <img class="icon" src="assets/icon-farm-new.png" alt="Farm">
+        <picture><source srcset="assets/icon-farm-new.webp" type="image/webp"><img class="icon" src="assets/icon-farm-new.png" alt="Farm" loading="lazy"></picture>
         <p class="pstep-title">Direct from farms</p>
         <p class="pstep-desc">We procure wheat farm-fresh, straight from the farmers</p>
       </div>
@@ -611,7 +621,7 @@ footer{
 <!-- ═══════════════ NATURAL INGREDIENTS ════════════ -->
 <section class="ingredients" id="ingredients">
   <div class="ingr-sticky">
-  <div class="ingr-wheat-deco" aria-hidden="true"><img src="assets/ingr-wheat-deco.png" alt=""></div>
+  <div class="ingr-wheat-deco" aria-hidden="true"><picture><source srcset="assets/ingr-wheat-deco.webp" type="image/webp"><img src="assets/ingr-wheat-deco.png" alt="" loading="lazy"></picture></div>
 <div class="ingr-header r">
       <p class="sec-title" id="ingrTitle">Natural Ingrediants <em>for Natural Health!</em></p>
       <p class="ingr-desc">Fresh and pure produce for your health — sourced directly from Indian farms.</p>
@@ -619,31 +629,31 @@ footer{
     <div class="ingr-rail-wrap" id="ingrRailWrap">
       <div class="ingr-rail" id="ingrRail">
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-gehu.png" alt="Gehu (Wheat)"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-gehu.webp" type="image/webp"><img src="assets/ingr-gehu.png" alt="Gehu (Wheat)" loading="lazy"></picture></div>
           <p class="ingr-label">Gehu (Wheat)</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-makka.png" alt="Makka"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-makka.webp" type="image/webp"><img src="assets/ingr-makka.png" alt="Makka" loading="lazy"></picture></div>
           <p class="ingr-label">Makka</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-bajra.png" alt="Bajra"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-bajra.webp" type="image/webp"><img src="assets/ingr-bajra.png" alt="Bajra" loading="lazy"></picture></div>
           <p class="ingr-label">Bajra</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-alsi.png" alt="Alsi (Flex seed)"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-alsi.webp" type="image/webp"><img src="assets/ingr-alsi.png" alt="Alsi (Flex seed)" loading="lazy"></picture></div>
           <p class="ingr-label">Alsi (Flex seed)</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-ragi.png" alt="Ragi"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-ragi.webp" type="image/webp"><img src="assets/ingr-ragi.png" alt="Ragi" loading="lazy"></picture></div>
           <p class="ingr-label">Ragi</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-wheat1.png" alt="Jau"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-wheat1.webp" type="image/webp"><img src="assets/ingr-wheat1.png" alt="Jau" loading="lazy"></picture></div>
           <p class="ingr-label">Jau</p>
         </div>
         <div class="ingr-item">
-          <div class="ingr-bowl"><img src="assets/ingr-wheat2.png" alt="Jowar"></div>
+          <div class="ingr-bowl"><picture><source srcset="assets/ingr-wheat2.webp" type="image/webp"><img src="assets/ingr-wheat2.png" alt="Jowar" loading="lazy"></picture></div>
           <p class="ingr-label">Jowar</p>
         </div>
       </div>
@@ -653,7 +663,7 @@ footer{
 
 <!-- ═══════════════ PRODUCTS ════════════════════════ -->
 <section class="products" id="products">
-  <div class="products-deco" aria-hidden="true"><img src="assets/products-bg-deco.png" alt=""></div>
+  <div class="products-deco" aria-hidden="true"><picture><source srcset="assets/products-bg-deco.webp" type="image/webp"><img src="assets/products-bg-deco.png" alt="" loading="lazy"></picture></div>
   <div class="prod-hdr r">
     <p class="sec-title" id="prodTitle">What our brand <em>offers you</em></p>
   </div>
@@ -666,11 +676,11 @@ footer{
   <!-- ── Mustard Oil panel ── -->
   <div class="prod-panel active" id="panel-oil">
     <div class="prod-rail">
-      <div class="card card-product r"><div class="card-badge">100% Pure</div><div class="card-img"><img src="assets/oil-black-1l.png" alt="Shivam Brand Black Mustard Oil 1 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">1 Litre</p></div>
-      <div class="card card-product r"><div class="card-badge">Yellow Mustard</div><div class="card-img"><img src="assets/oil-yellow-1l.png" alt="Shivam Brand Yellow Mustard Oil"></div><p class="card-pname">Shivam Brand Yellow Mustard Oil</p><p class="card-pqty">1 Litre, 2 Litre, 5 Litre, 15 Litre</p></div>
-      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><img src="assets/oil-black-2l.png" alt="Shivam Brand Black Mustard Oil 2 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">2 Litre</p></div>
-      <div class="card card-product r"><div class="card-badge">Family Pack</div><div class="card-img"><img src="assets/oil-black-5l.png" alt="Shivam Brand Black Mustard Oil 5 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">5 Litre</p></div>
-      <div class="card card-product r"><div class="card-badge">Bulk Pack</div><div class="card-img"><img src="assets/oil-black-15l.png" alt="Shivam Brand Black Mustard Oil 15 Litre"></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">15 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Pure</div><div class="card-img"><picture><source srcset="assets/oil-black-1l.webp" type="image/webp"><img src="assets/oil-black-1l.png" alt="Shivam Brand Black Mustard Oil 1 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">1 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Yellow Mustard</div><div class="card-img"><picture><source srcset="assets/oil-yellow-1l.webp" type="image/webp"><img src="assets/oil-yellow-1l.png" alt="Shivam Brand Yellow Mustard Oil" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Yellow Mustard Oil</p><p class="card-pqty">1 Litre, 2 Litre, 5 Litre, 15 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><picture><source srcset="assets/oil-black-2l.webp" type="image/webp"><img src="assets/oil-black-2l.png" alt="Shivam Brand Black Mustard Oil 2 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">2 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Family Pack</div><div class="card-img"><picture><source srcset="assets/oil-black-5l.webp" type="image/webp"><img src="assets/oil-black-5l.png" alt="Shivam Brand Black Mustard Oil 5 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">5 Litre</p></div>
+      <div class="card card-product r"><div class="card-badge">Bulk Pack</div><div class="card-img"><picture><source srcset="assets/oil-black-15l.webp" type="image/webp"><img src="assets/oil-black-15l.png" alt="Shivam Brand Black Mustard Oil 15 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">15 Litre</p></div>
     </div>
   </div>
 
@@ -687,23 +697,23 @@ footer{
           <span>Request on WhatsApp</span>
         </a>
       </div>
-      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><img src="assets/flour-chakki.png" alt="Fresh Chakki Flour"></div><p class="card-pname">Fresh Chakki Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% MP Wheat</div><div class="card-img"><img src="assets/flour-mp-sharbati.png" alt="MP Sharbati Flour"></div><p class="card-pname">MP Sharbati Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">Healthy Mix</div><div class="card-img"><img src="assets/flour-multigrain.png" alt="Multigrain Flour"></div><p class="card-pname">Multigrain Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% Rice</div><div class="card-img"><img src="assets/flour-rice.png" alt="Rice Flour"></div><p class="card-pname">Rice Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% Makka</div><div class="card-img"><img src="assets/flour-makka.png" alt="Makka Flour"></div><p class="card-pname">Makka Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% Bajra</div><div class="card-img"><img src="assets/flour-bajra.png" alt="Bajra Flour"></div><p class="card-pname">Bajra Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><picture><source srcset="assets/flour-chakki.webp" type="image/webp"><img src="assets/flour-chakki.png" alt="Fresh Chakki Flour" loading="lazy"></picture></div><p class="card-pname">Fresh Chakki Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% MP Wheat</div><div class="card-img"><picture><source srcset="assets/flour-mp-sharbati.webp" type="image/webp"><img src="assets/flour-mp-sharbati.png" alt="MP Sharbati Flour" loading="lazy"></picture></div><p class="card-pname">MP Sharbati Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Healthy Mix</div><div class="card-img"><picture><source srcset="assets/flour-multigrain.webp" type="image/webp"><img src="assets/flour-multigrain.png" alt="Multigrain Flour" loading="lazy"></picture></div><p class="card-pname">Multigrain Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Rice</div><div class="card-img"><picture><source srcset="assets/flour-rice.webp" type="image/webp"><img src="assets/flour-rice.png" alt="Rice Flour" loading="lazy"></picture></div><p class="card-pname">Rice Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Makka</div><div class="card-img"><picture><source srcset="assets/flour-makka.webp" type="image/webp"><img src="assets/flour-makka.png" alt="Makka Flour" loading="lazy"></picture></div><p class="card-pname">Makka Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Bajra</div><div class="card-img"><picture><source srcset="assets/flour-bajra.webp" type="image/webp"><img src="assets/flour-bajra.png" alt="Bajra Flour" loading="lazy"></picture></div><p class="card-pname">Bajra Flour</p><p class="card-pqty">1 kg, 5 kg, 10 kg, 50 kg</p></div>
     </div>
   </div>
 
   <!-- ── Grain Flour panel ── -->
   <div class="prod-panel" id="panel-grain">
     <div class="prod-rail">
-      <div class="card card-product r"><div class="card-badge">Pure Besan</div><div class="card-img"><img src="assets/grain-besan.png" alt="Chana Besan"></div><p class="card-pname">Chana Besan</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">High Protein</div><div class="card-img"><img src="assets/grain-sattu.png" alt="Chana Sattu"></div><p class="card-pname">Chana Sattu</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><img src="assets/grain-ragi.png" alt="Ragi Atta"></div><p class="card-pname">Ragi Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">Gluten Free</div><div class="card-img"><img src="assets/grain-jwar.png" alt="Jowar Atta"></div><p class="card-pname">Jowar Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
-      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><img src="assets/grain-jau.png" alt="Jau Atta"></div><p class="card-pname">Jau Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Pure Besan</div><div class="card-img"><picture><source srcset="assets/grain-besan.webp" type="image/webp"><img src="assets/grain-besan.png" alt="Chana Besan" loading="lazy"></picture></div><p class="card-pname">Chana Besan</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">High Protein</div><div class="card-img"><picture><source srcset="assets/grain-sattu.webp" type="image/webp"><img src="assets/grain-sattu.png" alt="Chana Sattu" loading="lazy"></picture></div><p class="card-pname">Chana Sattu</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><picture><source srcset="assets/grain-ragi.webp" type="image/webp"><img src="assets/grain-ragi.png" alt="Ragi Atta" loading="lazy"></picture></div><p class="card-pname">Ragi Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">Gluten Free</div><div class="card-img"><picture><source srcset="assets/grain-jwar.webp" type="image/webp"><img src="assets/grain-jwar.png" alt="Jowar Atta" loading="lazy"></picture></div><p class="card-pname">Jowar Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
+      <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><picture><source srcset="assets/grain-jau.webp" type="image/webp"><img src="assets/grain-jau.png" alt="Jau Atta" loading="lazy"></picture></div><p class="card-pname">Jau Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
     </div>
   </div>
 </section>
