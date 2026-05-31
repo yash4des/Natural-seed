@@ -402,90 +402,186 @@ button{border:none;background:none;cursor:pointer;font:inherit}
 .cta-btn-icon{width:18px;height:18px;flex-shrink:0}
 .cta-btn span{font-family:'Satoshi',sans-serif;font-weight:500;font-size:14px;color:var(--c-text);white-space:nowrap}
 
-/* ── STATS ───────────────────────────────────────── */
-.stats{
-  background:var(--c-cream);
-  padding:72px var(--pad);
-  display:flex;gap:0;justify-content:center;align-items:stretch;
-  flex-wrap:wrap;
-  border-top:1px solid var(--c-cream-border);
+/* ── REVIEWS + STATS (combined) ─────────────────── */
+.reviews{
+  background:linear-gradient(to bottom,#fefff3,#f2f5da);
+  padding:80px 0 60px;
+  overflow:hidden;
+  position:relative;
 }
-.stat{
-  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
-  padding:32px 48px;
-  border-right:1px solid var(--c-cream-border);
-  flex:1;min-width:180px;
-}
-.stat:last-child{border-right:none}
-@media(max-width:767px){.stat{border-right:none;border-bottom:1px solid var(--c-cream-border);width:100%;flex:none}.stat:last-child{border-bottom:none}}
-.stat-n{font-family:'Satoshi',sans-serif;font-weight:900;font-size:clamp(32px,3.5vw,48px);color:#185a11;line-height:1.1}
-.stat-l{font-family:'Satoshi',sans-serif;font-weight:500;font-size:clamp(13px,1.1vw,16px);color:#185a11;opacity:.75;margin-top:4px}
 
-/* ── REVIEWS ─────────────────────────────────────── */
-.reviews{background:var(--c-cream);padding-bottom:0;overflow:hidden}
-.reviews-heading{
-  padding:60px var(--pad) 32px;
-  font-family:'DM Sans',sans-serif;font-weight:700;
-  font-size:clamp(22px,2.5vw,32px);color:var(--c-green-mid);
+/* Decorative elements */
+.rev-deco-left{
+  position:absolute;left:0;top:50px;
+  width:195px;height:514px;
+  pointer-events:none;z-index:0;
+}
+.rev-deco-left img{width:100%;height:100%;object-fit:contain;display:block;}
+.rev-deco-right{
+  position:absolute;right:-40px;bottom:180px;
+  width:220px;
+  pointer-events:none;z-index:0;
+  mix-blend-mode:darken;
+  transform:rotate(-13.61deg);
+}
+.rev-deco-right img{width:100%;display:block;object-fit:contain;}
+@media(max-width:1023px){.rev-deco-right{display:none}}
+@media(max-width:767px){.rev-deco-left{display:none}}
+
+/* Stats row */
+.rev-stats{
+  display:flex;gap:clamp(24px,4.5vw,66px);
+  justify-content:center;align-items:flex-start;
+  padding:0 var(--pad);
+  margin-bottom:48px;
+  flex-wrap:wrap;
+}
+.rev-stat-item{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+.rev-stat-num-wrap{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.rev-stat-hl{
+  position:absolute;
+  background:#d6fe9e;
+  height:29px;
+  width:calc(100% + 16px);
+  bottom:4px;
+  z-index:0;
+  border-radius:2px;
+}
+.rev-stat-num{
+  position:relative;z-index:1;
+  font-family:'Satoshi',sans-serif;font-weight:900;
+  font-size:clamp(28px,2.5vw,36px);color:#2f7727;
+  letter-spacing:0.2px;line-height:1.1;white-space:nowrap;
+}
+.rev-stat-label{
+  font-family:'Satoshi',sans-serif;font-weight:500;
+  font-size:clamp(14px,1.4vw,20px);color:#78896c;
+  white-space:nowrap;
+}
+
+/* Section heading */
+.rev-heading{
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:clamp(20px,2.5vw,36px);color:#7b867e;
+  text-align:center;
+  max-width:544px;
+  margin:0 auto 52px;
+  line-height:1.15;
   font-variation-settings:'opsz' 14;
+  padding:0 var(--pad);
 }
-.rev-row{display:flex;gap:20px;padding-bottom:20px}
-.rev-row-1{margin-left:-48px}
-.rev-row-2{margin-left:36px}
+
+/* Card rows */
+.rev-row{display:flex;gap:24px;padding:0 var(--pad) 24px;}
+.rev-row-1{padding-left:calc(var(--pad) - 48px)}
+.rev-row-2{padding-left:calc(var(--pad) + 36px)}
+@media(max-width:1023px){.rev-row-1,.rev-row-2{padding-left:var(--pad)}}
 @media(max-width:767px){
-  .rev-row{flex-direction:column;padding:0 var(--pad) 20px;margin-left:0!important}
+  .rev-row{flex-direction:column;padding:0 var(--pad) 20px;}
+  .rev-row-1,.rev-row-2{padding-left:var(--pad)}
 }
+
+/* Review card */
 .rev-card{
-  background:#fff;
-  border:1.5px solid var(--c-cream-border);border-radius:20px;
-  padding:24px 28px;width:440px;min-width:300px;flex-shrink:0;
-  display:flex;flex-direction:column;gap:10px;
+  background:#f2f5da;
+  border:none;
+  border-radius:20px;
+  padding:18px 24px;
+  width:440px;min-width:300px;flex-shrink:0;
+  display:flex;flex-direction:column;gap:8px;
 }
 @media(max-width:767px){.rev-card{width:100%;min-width:0}}
-.rev-stars{display:flex;gap:3px;color:#f5a623;font-size:18px;letter-spacing:1px}
-.rev-text{font-family:'Satoshi',sans-serif;font-weight:500;font-size:15px;color:#111;line-height:1.65}
-.rev-author{font-family:'Satoshi',sans-serif;font-weight:700;font-size:14px;color:#24450b}
+.rev-stars{display:flex;gap:0;color:#f5a623;font-size:22px;letter-spacing:1px}
+.rev-text{font-family:'Satoshi',sans-serif;font-weight:500;font-size:16px;color:#111;line-height:1.6}
+.rev-author{font-family:'Satoshi',sans-serif;font-weight:500;font-size:16px;color:#24450b}
 
 /* ── FOOTER ──────────────────────────────────────── */
 footer{
-  background:#31511f;
-  padding:64px var(--pad) 40px;
+  background:linear-gradient(to bottom,#b3ddaf,#13560b);
+  padding:57px var(--pad) 52px;
+  position:relative;
+  overflow:hidden;
 }
-.ft-top{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  flex-wrap:wrap;gap:40px;padding-bottom:40px;
-  border-bottom:1px solid rgba(255,255,255,.12);
+/* Large ellipse glow */
+.ft-ellipse{
+  position:absolute;
+  width:3033px;height:1273px;
+  left:-802px;top:-1140px;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.18) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+  border-radius:50%;
 }
-.ft-brand{display:flex;flex-direction:column;gap:16px}
-.ft-logo img{height:60px;width:auto;opacity:.92;filter:brightness(0) invert(1)}
-.ft-tagline{font-family:'Satoshi',sans-serif;font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;max-width:260px}
-.ft-nav{display:flex;flex-direction:column;gap:12px}
-.ft-nav-title{font-family:'Satoshi',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
-.ft-links{display:flex;flex-direction:column;gap:10px}
-.ft-links a{font-family:'Satoshi',sans-serif;font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color .2s}
-.ft-links a:hover{color:#fff}
-.ft-social-col{display:flex;flex-direction:column;gap:12px}
-.ft-social-title{font-family:'Satoshi',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.08em}
-.ft-social{display:flex;gap:10px}
-.ft-social a{
-  width:40px;height:40px;border-radius:50%;
-  background:rgba(255,255,255,.12);
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.7);
-  transition:background .2s,color .2s;
-}
-.ft-social a:hover{background:rgba(255,255,255,.25);color:#fff}
-.ft-social svg{width:18px;height:18px}
-.ft-bottom{
+/* Three-column main row */
+.ft-main{
+  position:relative;z-index:1;
   display:flex;align-items:center;justify-content:space-between;
-  padding-top:28px;flex-wrap:wrap;gap:12px;
+  gap:32px;
+  margin-bottom:40px;
+  flex-wrap:wrap;
 }
-.ft-copy{font-family:'Satoshi',sans-serif;font-size:13px;color:rgba(255,255,255,.35)}
+.ft-col-left{flex:0 0 auto}
+.ft-logo-img{height:76px;width:auto;display:block;}
+.ft-col-center{
+  display:flex;flex-direction:column;gap:24px;
+  align-items:center;flex:1;min-width:200px;
+}
+.ft-col-right{
+  display:flex;flex-direction:column;gap:24px;
+  align-items:flex-end;flex:0 0 auto;
+}
+.ft-col-title{
+  font-family:'Inter',sans-serif;font-weight:400;
+  font-size:16px;color:#24450b;
+  line-height:1.5;
+}
+.ft-links-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center}
+.ft-links-row a{
+  font-family:'Satoshi',sans-serif;font-weight:500;
+  font-size:14px;color:#2c7522;line-height:1.1;
+  transition:opacity .2s;
+}
+.ft-links-row a:hover{opacity:.7}
+.ft-social-row{display:flex;gap:16px;align-items:center}
+.ft-social-row a{
+  color:#1a4d14;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .2s;
+}
+.ft-social-row a:hover{opacity:.7}
+.ft-social-row svg{width:24px;height:24px;display:block}
+/* Bottom row */
+.ft-bottom{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.ft-copy{font-family:'Inter',sans-serif;font-size:14px;color:#a1bc8f;font-weight:400}
 .ft-cert{
   display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.08);border-radius:999px;
-  padding:6px 14px;
-  font-family:'Satoshi',sans-serif;font-size:12px;color:rgba(255,255,255,.5);
+  background:rgba(242,245,218,.6);border:1px solid #edf0da;border-radius:999px;
+  padding:6px 20px;
+  font-family:'Satoshi',sans-serif;font-size:14px;color:#253926;font-weight:500;
+}
+/* "naturalseed" watermark */
+.ft-watermark{
+  position:absolute;
+  bottom:-24px;left:50%;transform:translateX(-50%);
+  font-family:'Satoshi',sans-serif;font-weight:900;
+  font-size:clamp(60px,9vw,120px);
+  color:rgba(44,117,34,.22);
+  white-space:nowrap;letter-spacing:-2px;
+  pointer-events:none;user-select:none;
+  z-index:0;
+}
+@media(max-width:767px){
+  .ft-main{flex-direction:column;align-items:center;text-align:center}
+  .ft-col-right{align-items:center}
+  .ft-watermark{font-size:clamp(40px,12vw,80px)}
 }
   </style>
 </head>
@@ -718,29 +814,37 @@ footer{
   </div>
 </section>
 
-<!-- ═══════════════ STATS ════════════════════════════ -->
-<section class="stats" id="stats">
-  <div class="stat r">
-    <p class="stat-n">5000+</p>
-    <p class="stat-l">Happy Customers</p>
-  </div>
-  <div class="stat r d1">
-    <p class="stat-n">10 Years</p>
-    <p class="stat-l">In Business Since 2016</p>
-  </div>
-  <div class="stat r d2">
-    <p class="stat-n">5.0 ★</p>
-    <p class="stat-l">Google Rating</p>
-  </div>
-  <div class="stat r d3">
-    <p class="stat-n">100%</p>
-    <p class="stat-l">FSSAI Certified</p>
-  </div>
-</section>
-
 <!-- ═══════════════ REVIEWS ══════════════════════════ -->
 <section class="reviews" id="reviews">
-  <p class="reviews-heading r">What our customers say</p>
+  <!-- Decorative wheat plant left -->
+  <div class="rev-deco-left" aria-hidden="true">
+    <img src="assets/wheat-plant.svg" alt="" loading="lazy">
+  </div>
+  <!-- Decorative product image right -->
+  <div class="rev-deco-right" aria-hidden="true">
+    <picture>
+      <source srcset="assets/rev-product.webp" type="image/webp">
+      <img src="assets/rev-product.png" alt="" loading="lazy">
+    </picture>
+  </div>
+
+  <!-- Stats -->
+  <div class="rev-stats">
+    <div class="rev-stat-item r">
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">5000+</span></div>
+      <p class="rev-stat-label">Happy Customers</p>
+    </div>
+    <div class="rev-stat-item r d1">
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">10 years</span></div>
+      <p class="rev-stat-label">In Business Since 2016</p>
+    </div>
+    <div class="rev-stat-item r d2">
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">5.0</span></div>
+      <p class="rev-stat-label">Google Rating</p>
+    </div>
+  </div>
+
+  <p class="rev-heading r">We serve what we commit for our customer</p>
 
   <!-- Row 1 (offset left) -->
   <div class="rev-row rev-row-1">
@@ -793,28 +897,29 @@ footer{
 
 <!-- ═══════════════ FOOTER ════════════════════════════ -->
 <footer>
-  <div class="ft-top">
-    <div class="ft-brand">
-      <div class="ft-logo">
-        <img src="assets/logo.png" alt="Natural Seed">
-      </div>
-      <p class="ft-tagline">Farm-fresh produce delivered honest — no middlemen, no compromises.</p>
+  <div class="ft-ellipse" aria-hidden="true"></div>
+
+  <div class="ft-main">
+    <!-- Left: Logo -->
+    <div class="ft-col-left">
+      <img src="assets/logo.png" alt="Natural Seed" class="ft-logo-img">
     </div>
 
-    <div class="ft-nav">
-      <p class="ft-nav-title">Quick Links</p>
-      <nav class="ft-links">
+    <!-- Center: Quick links -->
+    <div class="ft-col-center">
+      <p class="ft-col-title">Quick links</p>
+      <nav class="ft-links-row">
         <a href="#home">Home</a>
-        <a href="#story">Our Story</a>
-        <a href="#ingredients">Ingredients</a>
+        <a href="#story">About</a>
         <a href="#products">Products</a>
-        <a href="#reviews">Reviews</a>
+        <a href="#reviews">Review</a>
       </nav>
     </div>
 
-    <div class="ft-social-col">
-      <p class="ft-social-title">Follow us</p>
-      <div class="ft-social">
+    <!-- Right: Follow us -->
+    <div class="ft-col-right">
+      <p class="ft-col-title">Follow us</p>
+      <div class="ft-social-row">
         <a href="#" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
             <rect x="2" y="2" width="20" height="20" rx="5"/>
@@ -832,9 +937,11 @@ footer{
   </div>
 
   <div class="ft-bottom">
-    <p class="ft-copy">© 2024 Shivam Bhog Natural Seed. All rights reserved.</p>
-    <span class="ft-cert">✓ FSSAI Certified</span>
+    <p class="ft-copy">© 2026 All rights reserved.</p>
+    <span class="ft-cert">✓ FSSAI certified</span>
   </div>
+
+  <p class="ft-watermark" aria-hidden="true">naturalseed</p>
 </footer>
 
 <!-- Mobile drawer -->
