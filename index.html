@@ -264,7 +264,7 @@ button{border:none;background:none;cursor:pointer;font:inherit}
 .story-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:64px}
 .story-text{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
 .story-h{font-family:'DM Sans',sans-serif;font-weight:700;font-size:clamp(22px,2.2vw,28px);color:var(--c-green-mid);line-height:1.1;font-variation-settings:'opsz' 14}
-.story-p{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(15px,1.4vw,20px);color:#234e0f;line-height:1.8;max-width:min(1100px,100%)}
+.story-p{font-family:'Satoshi',sans-serif;font-style:normal;font-weight:500;font-size:clamp(15px,1.4vw,18px);color:#234e0f;line-height:1.8;max-width:min(1100px,100%)}
 
 /* process steps */
 .process{display:flex;align-items:flex-start;justify-content:center;width:100%;flex-wrap:wrap;gap:0 8px}
@@ -307,14 +307,13 @@ button{border:none;background:none;cursor:pointer;font:inherit}
   font-family:'DM Sans',sans-serif;font-weight:600;
   font-size:clamp(26px,3.5vw,56px);line-height:1.1;
   font-variation-settings:'opsz' 14;
-  background:linear-gradient(to right,var(--c-green-light),var(--c-green-dark));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  color:#4C8444;
   max-width:527px;
 }
-.sec-title em{font-family:'DM Serif Display',serif;font-style:italic}
+.sec-title em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;color:#4C8444;}
 /* per-word colours on ingredients title */
-.sec-title.is-split{background:none;-webkit-text-fill-color:inherit;}
-.sec-title.is-split .word{background:none;}
+.sec-title.is-split{color:#4C8444;}
+.sec-title.is-split .word{color:#4C8444;}
 .ingr-desc{
   font-family:'Inter',sans-serif;font-weight:500;
   font-size:clamp(14px,1.3vw,20px);color:#2c3f27;
@@ -395,7 +394,7 @@ button{border:none;background:none;cursor:pointer;font:inherit}
 .cta-btn{
   display:inline-flex;align-items:center;gap:10px;
   background:var(--c-green-accent);border-radius:999px;padding:10px 20px;
-  cursor:pointer;align-self:flex-end;margin-top:auto;
+  cursor:pointer;align-self:flex-start;margin-top:auto;
   transition:transform .2s,background .2s;
 }
 .cta-btn:hover{transform:translateY(-2px);background:#c5f085}
@@ -418,23 +417,23 @@ button{border:none;background:none;cursor:pointer;font:inherit}
 }
 .rev-deco-left img{width:100%;height:100%;object-fit:contain;display:block;}
 .rev-deco-right{
-  position:absolute;right:-40px;bottom:180px;
-  width:220px;
+  position:absolute;right:0;top:0;
+  width:clamp(180px,16vw,280px);
   pointer-events:none;z-index:0;
   mix-blend-mode:darken;
-  transform:rotate(-13.61deg);
 }
 .rev-deco-right img{width:100%;display:block;object-fit:contain;}
-@media(max-width:1023px){.rev-deco-right{display:none}}
-@media(max-width:767px){.rev-deco-left{display:none}}
+@media(max-width:1023px){.rev-deco-right{width:160px}}
+@media(max-width:767px){.rev-deco-left,.rev-deco-right{display:none}}
 
 /* Stats row */
 .rev-stats{
-  display:flex;gap:clamp(24px,4.5vw,66px);
+  display:flex;gap:clamp(20px,4.5vw,66px);
   justify-content:center;align-items:flex-start;
   padding:0 var(--pad);
   margin-bottom:48px;
   flex-wrap:wrap;
+  position:relative;z-index:1;
 }
 .rev-stat-item{
   display:flex;flex-direction:column;align-items:center;gap:12px;
@@ -448,7 +447,7 @@ button{border:none;background:none;cursor:pointer;font:inherit}
   background:#d6fe9e;
   height:29px;
   width:calc(100% + 16px);
-  bottom:4px;
+  bottom:-8px;
   z-index:0;
   border-radius:2px;
 }
@@ -467,24 +466,29 @@ button{border:none;background:none;cursor:pointer;font:inherit}
 /* Section heading */
 .rev-heading{
   font-family:'DM Sans',sans-serif;font-weight:600;
-  font-size:clamp(20px,2.5vw,36px);color:#7b867e;
+  font-size:clamp(18px,2.5vw,36px);color:#7b867e;
   text-align:center;
-  max-width:544px;
+  width:min(630px,90%);
   margin:0 auto 52px;
-  line-height:1.15;
+  line-height:1.2;
   font-variation-settings:'opsz' 14;
-  padding:0 var(--pad);
+  padding:0;
+  position:relative;z-index:1;
 }
 
-/* Card rows */
-.rev-row{display:flex;gap:24px;padding:0 var(--pad) 24px;}
-.rev-row-1{padding-left:calc(var(--pad) - 48px)}
-.rev-row-2{padding-left:calc(var(--pad) + 36px)}
-@media(max-width:1023px){.rev-row-1,.rev-row-2{padding-left:var(--pad)}}
-@media(max-width:767px){
-  .rev-row{flex-direction:column;padding:0 var(--pad) 20px;}
-  .rev-row-1,.rev-row-2{padding-left:var(--pad)}
+/* Card rows — marquee */
+@keyframes marquee-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marquee-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+.rev-row{overflow:hidden;padding-bottom:20px;}
+.rev-row-1{margin-bottom:4px}
+.rev-track{
+  display:flex;gap:24px;
+  width:max-content;
+  animation:marquee-left 40s linear infinite;
 }
+.rev-row-2 .rev-track{animation:marquee-right 50s linear infinite;}
+.rev-track:hover{animation-play-state:paused}
 
 /* Review card */
 .rev-card{
@@ -492,33 +496,120 @@ button{border:none;background:none;cursor:pointer;font:inherit}
   border:none;
   border-radius:20px;
   padding:18px 24px;
-  width:440px;min-width:300px;flex-shrink:0;
+  width:400px;flex-shrink:0;
   display:flex;flex-direction:column;gap:8px;
 }
-@media(max-width:767px){.rev-card{width:100%;min-width:0}}
-.rev-stars{display:flex;gap:0;color:#f5a623;font-size:22px;letter-spacing:1px}
-.rev-text{font-family:'Satoshi',sans-serif;font-weight:500;font-size:16px;color:#111;line-height:1.6}
-.rev-author{font-family:'Satoshi',sans-serif;font-weight:500;font-size:16px;color:#24450b}
+.rev-stars{display:block;line-height:1}
+.rev-stars img{height:22px;width:auto;display:block;}
+.rev-text{font-family:'Satoshi',sans-serif;font-weight:500;font-size:15px;color:#111;line-height:1.6}
+.rev-author{font-family:'Satoshi',sans-serif;font-weight:500;font-size:15px;color:#24450b}
+@media(max-width:767px){.rev-card{width:300px}}
+
+/* ── FAQ ──────────────────────────────────────────── */
+.faq{
+  background:#fdfef1;
+  padding:96px 120px;
+  display:flex;flex-direction:column;align-items:center;gap:64px;
+}
+.faq-container{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;
+}
+.faq-cta-wrap{max-width:1216px;width:100%;margin:64px auto 0;}
+.faq-header{
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+  max-width:768px;width:100%;
+}
+.faq-title{
+  font-size:clamp(28px,4vw,56px);
+  color:#4c8444;line-height:1.1;
+  letter-spacing:-0.02em;
+}
+.faq-title strong{font-family:'DM Sans',sans-serif;font-weight:600;font-style:normal;font-variation-settings:'opsz' 14;}
+.faq-title em{font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;}
+.faq-sub{
+  font-family:'Inter',sans-serif;font-weight:400;
+  font-size:clamp(15px,1.4vw,20px);color:#535862;line-height:1.5;
+}
+.faq-body{display:flex;flex-direction:column;gap:64px;align-items:center;max-width:768px;width:100%;margin:0 auto;}
+@media(max-width:1023px){.faq{padding:72px 48px;}}
+@media(max-width:767px){.faq{padding:64px 20px;}}
+.faq-list{display:flex;flex-direction:column;gap:32px;width:100%;}
+.faq-item{display:flex;flex-direction:column;width:100%;}
+.faq-item + .faq-item .faq-q{border-top:1px solid #e9eaeb;padding-top:24px;}
+.faq-q{
+  display:flex;gap:24px;align-items:flex-start;
+  cursor:pointer;width:100%;background:none;border:none;text-align:left;
+  padding:0;
+}
+.faq-q-text{
+  font-family:'Inter',sans-serif;font-weight:500;
+  font-size:clamp(15px,1.2vw,18px);color:#181d27;line-height:1.55;flex:1;
+}
+.faq-icon{
+  width:24px;height:24px;flex-shrink:0;margin-top:2px;
+  color:#535862;transition:color .2s;
+}
+.faq-item.open .faq-icon{color:#4c8444;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+.faq-a-inner{
+  font-family:'Inter',sans-serif;font-weight:400;
+  font-size:clamp(14px,1.1vw,16px);color:#535862;
+  line-height:1.75;padding-top:8px;padding-bottom:0;
+}
+.faq-item.open .faq-a{max-height:300px;}
+/* Still have questions CTA */
+.faq-cta{
+  background:#f2f5da;border-radius:16px;
+  padding:32px 32px 40px;
+  display:flex;flex-direction:column;align-items:center;gap:32px;
+  width:100%;
+}
+.faq-avatars{
+  position:relative;width:120px;height:56px;flex-shrink:0;
+}
+.faq-av{
+  position:absolute;border-radius:50%;
+  border:2px solid #fff;
+  width:48px;height:48px;top:8px;
+  overflow:hidden;
+}
+.faq-av img{width:100%;height:100%;object-fit:cover;display:block;}
+.faq-av-c{width:56px;height:56px;top:0;left:32px;}
+.faq-cta-text{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;max-width:480px;}
+.faq-cta-h{font-family:'Inter',sans-serif;font-weight:600;font-size:20px;color:#181d27;line-height:1.5;}
+.faq-cta-p{font-family:'Inter',sans-serif;font-weight:400;font-size:clamp(14px,1.2vw,18px);color:#535862;line-height:1.55;}
+.faq-cta-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#181d27;color:#fff;
+  font-family:'Inter',sans-serif;font-weight:600;font-size:16px;
+  padding:12px 18px;border-radius:8px;
+  border:none;cursor:pointer;
+  transition:background .2s;text-decoration:none;
+}
+.faq-cta-btn:hover{background:#2c3340;}
 
 /* ── FOOTER ──────────────────────────────────────── */
 footer{
-  background:linear-gradient(to bottom,#b3ddaf,#13560b);
-  padding:57px var(--pad) 52px;
+  background:url('assets/footer-bg.webp') center center / cover no-repeat;
+  padding:57px 80px 80px;
   position:relative;
   overflow:hidden;
 }
-/* Large ellipse glow */
-.ft-ellipse{
+/* Bottom wordmark */
+.ft-watermark{
   position:absolute;
-  width:3033px;height:1273px;
-  left:-802px;top:-1140px;
-  background:radial-gradient(ellipse at center,rgba(255,255,255,.18) 0%,transparent 65%);
-  pointer-events:none;z-index:0;
-  border-radius:50%;
+  bottom:-18px;left:50%;
+  transform:translateX(-50%);
+  width:min(860px,100%);
+  pointer-events:none;user-select:none;
+  z-index:0;
 }
+.ft-watermark img{width:100%;display:block;}
 /* Three-column main row */
 .ft-main{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   display:flex;align-items:center;justify-content:space-between;
   gap:32px;
   margin-bottom:40px;
@@ -548,15 +639,16 @@ footer{
 .ft-links-row a:hover{opacity:.7}
 .ft-social-row{display:flex;gap:16px;align-items:center}
 .ft-social-row a{
-  color:#1a4d14;
   display:flex;align-items:center;justify-content:center;
   transition:opacity .2s;
 }
 .ft-social-row a:hover{opacity:.7}
-.ft-social-row svg{width:24px;height:24px;display:block}
+.ft-social-row img{width:28px;height:28px;display:block;object-fit:contain;}
 /* Bottom row */
 .ft-bottom{
-  position:relative;z-index:1;
+  position:absolute;
+  bottom:24px;left:80px;right:80px;
+  z-index:2;
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:12px;
 }
@@ -567,21 +659,11 @@ footer{
   padding:6px 20px;
   font-family:'Satoshi',sans-serif;font-size:14px;color:#253926;font-weight:500;
 }
-/* "naturalseed" watermark */
-.ft-watermark{
-  position:absolute;
-  bottom:-24px;left:50%;transform:translateX(-50%);
-  font-family:'Satoshi',sans-serif;font-weight:900;
-  font-size:clamp(60px,9vw,120px);
-  color:rgba(44,117,34,.22);
-  white-space:nowrap;letter-spacing:-2px;
-  pointer-events:none;user-select:none;
-  z-index:0;
-}
 @media(max-width:767px){
   .ft-main{flex-direction:column;align-items:center;text-align:center}
   .ft-col-right{align-items:center}
-  .ft-watermark{font-size:clamp(40px,12vw,80px)}
+  .ft-watermark{width:100%}
+  footer{padding-bottom:60px}
 }
   </style>
 </head>
@@ -627,7 +709,7 @@ footer{
       <em> honest to the core</em>
     </h1>
     <p class="hero-subtitle">
-      Fresh and pure produce for your health — sourced directly from Indian farms.
+      Fresh and pure produce for your health sourced directly from Indian farms.
     </p>
 
     <!-- Carousel -->
@@ -720,7 +802,7 @@ footer{
   <div class="ingr-wheat-deco" aria-hidden="true"><picture><source srcset="assets/ingr-wheat-deco.webp" type="image/webp"><img src="assets/ingr-wheat-deco.png" alt="" loading="lazy"></picture></div>
 <div class="ingr-header r">
       <p class="sec-title" id="ingrTitle">Natural Ingrediants <em>for Natural Health!</em></p>
-      <p class="ingr-desc">Fresh and pure produce for your health — sourced directly from Indian farms.</p>
+      <p class="ingr-desc">Pure, wholesome ingredients handpicked from nature to nourish your body every day.</p>
     </div>
     <div class="ingr-rail-wrap" id="ingrRailWrap">
       <div class="ingr-rail" id="ingrRail">
@@ -772,6 +854,16 @@ footer{
   <!-- ── Mustard Oil panel ── -->
   <div class="prod-panel active" id="panel-oil">
     <div class="prod-rail">
+      <div class="card card-cta r">
+        <div>
+          <p class="cta-title">Order fresh-pressed mustard oil in bulk.</p>
+          <p class="cta-desc">Need 5L, 15L jerry cans or custom quantities for home or business? We deliver fresh across Gurugram.</p>
+        </div>
+        <a href="https://wa.me/917827190611" class="cta-btn" target="_blank" rel="noopener">
+          <svg class="cta-btn-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="color:#253926"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>Request on WhatsApp</span>
+        </a>
+      </div>
       <div class="card card-product r"><div class="card-badge">100% Pure</div><div class="card-img"><picture><source srcset="assets/oil-black-1l.webp" type="image/webp"><img src="assets/oil-black-1l.png" alt="Shivam Brand Black Mustard Oil 1 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">1 Litre</p></div>
       <div class="card card-product r"><div class="card-badge">Yellow Mustard</div><div class="card-img"><picture><source srcset="assets/oil-yellow-1l.webp" type="image/webp"><img src="assets/oil-yellow-1l.png" alt="Shivam Brand Yellow Mustard Oil" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Yellow Mustard Oil</p><p class="card-pqty">1 Litre, 2 Litre, 5 Litre, 15 Litre</p></div>
       <div class="card card-product r"><div class="card-badge">Best Seller</div><div class="card-img"><picture><source srcset="assets/oil-black-2l.webp" type="image/webp"><img src="assets/oil-black-2l.png" alt="Shivam Brand Black Mustard Oil 2 Litre" loading="lazy"></picture></div><p class="card-pname">Shivam Brand Black Mustard Oil</p><p class="card-pqty">2 Litre</p></div>
@@ -805,6 +897,16 @@ footer{
   <!-- ── Grain Flour panel ── -->
   <div class="prod-panel" id="panel-grain">
     <div class="prod-rail">
+      <div class="card card-cta r">
+        <div>
+          <p class="cta-title">Need specialty flour in bulk? We mill it fresh.</p>
+          <p class="cta-desc">From besan to ragi to sattu — order any quantity and we mill it fresh with zero additives.</p>
+        </div>
+        <a href="https://wa.me/917827190611" class="cta-btn" target="_blank" rel="noopener">
+          <svg class="cta-btn-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="color:#253926"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>Request on WhatsApp</span>
+        </a>
+      </div>
       <div class="card card-product r"><div class="card-badge">Pure Besan</div><div class="card-img"><picture><source srcset="assets/grain-besan.webp" type="image/webp"><img src="assets/grain-besan.png" alt="Chana Besan" loading="lazy"></picture></div><p class="card-pname">Chana Besan</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
       <div class="card card-product r"><div class="card-badge">High Protein</div><div class="card-img"><picture><source srcset="assets/grain-sattu.webp" type="image/webp"><img src="assets/grain-sattu.png" alt="Chana Sattu" loading="lazy"></picture></div><p class="card-pname">Chana Sattu</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
       <div class="card card-product r"><div class="card-badge">100% Natural</div><div class="card-img"><picture><source srcset="assets/grain-ragi.webp" type="image/webp"><img src="assets/grain-ragi.png" alt="Ragi Atta" loading="lazy"></picture></div><p class="card-pname">Ragi Atta</p><p class="card-pqty">1 kg, 5 kg, 10 kg</p></div>
@@ -820,85 +922,271 @@ footer{
   <div class="rev-deco-left" aria-hidden="true">
     <img src="assets/wheat-plant.svg" alt="" loading="lazy">
   </div>
-  <!-- Decorative product image right -->
+  <!-- Decorative right leaf -->
   <div class="rev-deco-right" aria-hidden="true">
     <picture>
-      <source srcset="assets/rev-product.webp" type="image/webp">
-      <img src="assets/rev-product.png" alt="" loading="lazy">
+      <source srcset="assets/right-leaf.webp" type="image/webp">
+      <img src="assets/right leaf.png" alt="" loading="lazy">
     </picture>
   </div>
 
   <!-- Stats -->
   <div class="rev-stats">
     <div class="rev-stat-item r">
-      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">5000+</span></div>
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num" data-count="5000" data-suffix="+" data-decimals="0">5000+</span></div>
       <p class="rev-stat-label">Happy Customers</p>
     </div>
     <div class="rev-stat-item r d1">
-      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">10 years</span></div>
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num" data-count="10" data-suffix=" years" data-decimals="0">10 years</span></div>
       <p class="rev-stat-label">In Business Since 2016</p>
     </div>
     <div class="rev-stat-item r d2">
-      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num">5.0</span></div>
+      <div class="rev-stat-num-wrap"><span class="rev-stat-hl"></span><span class="rev-stat-num" data-count="5" data-suffix="" data-decimals="1">5.0</span></div>
       <p class="rev-stat-label">Google Rating</p>
     </div>
   </div>
 
-  <p class="rev-heading r">We serve what we commit for our customer</p>
+  <p class="rev-heading r">We serve what we commit<br>for our customer</p>
 
-  <!-- Row 1 (offset left) -->
+  <!-- Row 1 — auto-scrolls left -->
   <div class="rev-row rev-row-1">
-    <div class="rev-card r">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
-      <p class="rev-author">— Aditya Kumar</p>
-    </div>
-    <div class="rev-card r d1">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Bohot achha atta milta hai yahan se. Pure mustard oil bhi milta hai. Family ke liye best quality products hain. Highly recommend karta hoon.</p>
-      <p class="rev-author">— Rajesh Sharma</p>
-    </div>
-    <div class="rev-card r d2">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Fresh and pure atta. My family loved it. The mustard oil is very pure and aromatic. Will definitely order again!</p>
-      <p class="rev-author">— Priya Verma</p>
-    </div>
-    <div class="rev-card r d3">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Shivam Bhog products are amazing! The atta makes such soft rotis and the sarso tel is pure and fragrant. Best brand for pure products.</p>
-      <p class="rev-author">— Suneeta Gupta</p>
+    <div class="rev-track">
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Best quality products milte hai main yaha se atta aur tel lekar jaat ahun yaha par chakki bhi hai jaha se main gehu piswata hun. Gurgaon best quality atta aur mustard oil.</p>
+        <p class="rev-author">— Umesh Kumar</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Main yaha se 2015 se food items le raha hun bilkul pure hai koi bhi milawat nahi hai. Hamare area ke best shop hai reasonable price me original oil aur atta milta hai.</p>
+        <p class="rev-author">— Monu Sharma</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Main yaha se gehun piswata hun aur mustard oil bhi khareedta hun. Yaha par chawal ka atta besan daliya multigrain atta bhi milta hai. Highly recommend this shop.</p>
+        <p class="rev-author">— Nand Ram</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Oil and atta pure milta hai ek dum original products hai aur owner bhi ache hai.</p>
+        <p class="rev-author">— Devender Singh</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
+        <p class="rev-author">— Aditya Kumar</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Bohot achha atta milta hai yahan se. Pure mustard oil bhi milta hai. Family ke liye best quality products hain. Highly recommend karta hoon.</p>
+        <p class="rev-author">— Rajesh Sharma</p>
+      </div>
+      <!-- Duplicates for seamless loop -->
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Best quality products milte hai main yaha se atta aur tel lekar jaat ahun yaha par chakki bhi hai jaha se main gehu piswata hun. Gurgaon best quality atta aur mustard oil.</p>
+        <p class="rev-author">— Umesh Kumar</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Main yaha se 2015 se food items le raha hun bilkul pure hai koi bhi milawat nahi hai. Hamare area ke best shop hai reasonable price me original oil aur atta milta hai.</p>
+        <p class="rev-author">— Monu Sharma</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Main yaha se gehun piswata hun aur mustard oil bhi khareedta hun. Yaha par chawal ka atta besan daliya multigrain atta bhi milta hai. Highly recommend this shop.</p>
+        <p class="rev-author">— Nand Ram</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Oil and atta pure milta hai ek dum original products hai aur owner bhi ache hai.</p>
+        <p class="rev-author">— Devender Singh</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
+        <p class="rev-author">— Aditya Kumar</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Bohot achha atta milta hai yahan se. Pure mustard oil bhi milta hai. Family ke liye best quality products hain. Highly recommend karta hoon.</p>
+        <p class="rev-author">— Rajesh Sharma</p>
+      </div>
     </div>
   </div>
 
-  <!-- Row 2 (offset right) -->
+  <!-- Row 2 — auto-scrolls right (opposite direction) -->
   <div class="rev-row rev-row-2">
-    <div class="rev-card r">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">100 percent pure atta and sarso ka tel milta hai. Mera pura parivaar yaha se products lete hai — multigrain atta, besan, soya bean, oats — sab hi trha ka atta yaha milta hai.</p>
-      <p class="rev-author">— Manish Kumar</p>
-    </div>
-    <div class="rev-card r d1">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Kafi tagde products hain yahan ke. Chakki atta bilkul fresh aata hai. Sarson ka tel bhi ghara hua jaisa lagta hai. Bahut accha!</p>
-      <p class="rev-author">— Amit Singh</p>
-    </div>
-    <div class="rev-card r d2">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Best quality products in the market. The multigrain atta is perfect for health-conscious families. Highly recommend!</p>
-      <p class="rev-author">— Neeta Jain</p>
-    </div>
-    <div class="rev-card r d3">
-      <div class="rev-stars">★★★★★</div>
-      <p class="rev-text">Farm fresh se seedha ghar tak — yahi toh baat hai Shivam Bhog ki. No adulteration, no compromise. 5 stars deserved!</p>
-      <p class="rev-author">— Deepak Yadav</p>
+    <div class="rev-track">
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Best quality products for evrytime use. Once visit and take for quality testing. Home delivery is also available. You can extract oil from mustard and flour mill is available on demand.</p>
+        <p class="rev-author">— Ram Prakash Singh</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Shivam brand oil and Shivam bhog atta kafi acha hai i like it and isko khane mai bhi swad atta hai please always serve this kind of quality thank you for being genuine.</p>
+        <p class="rev-author">— Virendra Vishwakarma</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Gurgaon mai best quality oil and atta hai inka. Isse phle mai koi online atta mangwata tha usse meri tabiyat kharab hui, fr kisse ne batya Shivam bhog atta and tail — kaffi accha hai.</p>
+        <p class="rev-author">— Rajpoot Neelu</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Oil acha milta h inke brand ka — Shivam brand oil 100% pure h koi milawat nhi. Atta bhi sudh chakki ka fresh atta milta hai. Ap log bhi try kre good quality product 😊</p>
+        <p class="rev-author">— Shailendra Singh Bhadauriya</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Kafi tagde products hain yahan ke. Chakki atta bilkul fresh aata hai. Sarson ka tel bhi ghara hua jaisa lagta hai. Bahut accha!</p>
+        <p class="rev-author">— Amit Singh</p>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt="5 stars"></picture></div>
+        <p class="rev-text">Farm fresh se seedha ghar tak — yahi toh baat hai Shivam Bhog ki. No adulteration, no compromise. 5 stars deserved!</p>
+        <p class="rev-author">— Deepak Yadav</p>
+      </div>
+      <!-- Duplicates for seamless loop -->
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Best quality products for evrytime use. Once visit and take for quality testing. Home delivery is also available. You can extract oil from mustard and flour mill is available on demand.</p>
+        <p class="rev-author">— Ram Prakash Singh</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Shivam brand oil and Shivam bhog atta kafi acha hai i like it and isko khane mai bhi swad atta hai please always serve this kind of quality thank you for being genuine.</p>
+        <p class="rev-author">— Virendra Vishwakarma</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Gurgaon mai best quality oil and atta hai inka. Isse phle mai koi online atta mangwata tha usse meri tabiyat kharab hui, fr kisse ne batya Shivam bhog atta and tail — kaffi accha hai.</p>
+        <p class="rev-author">— Rajpoot Neelu</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Oil acha milta h inke brand ka — Shivam brand oil 100% pure h koi milawat nhi. Atta bhi sudh chakki ka fresh atta milta hai. Ap log bhi try kre good quality product 😊</p>
+        <p class="rev-author">— Shailendra Singh Bhadauriya</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Kafi tagde products hain yahan ke. Chakki atta bilkul fresh aata hai. Sarson ka tel bhi ghara hua jaisa lagta hai. Bahut accha!</p>
+        <p class="rev-author">— Amit Singh</p>
+      </div>
+      <div class="rev-card" aria-hidden="true">
+        <div class="rev-stars"><picture><source srcset="assets/Stars.webp" type="image/webp"><img src="assets/Stars.png" alt=""></picture></div>
+        <p class="rev-text">Farm fresh se seedha ghar tak — yahi toh baat hai Shivam Bhog ki. No adulteration, no compromise. 5 stars deserved!</p>
+        <p class="rev-author">— Deepak Yadav</p>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════ FAQ ════════════════════════════ -->
+<section class="faq" id="faq">
+
+  <div class="faq-container">
+    <div class="faq-header">
+      <h2 class="faq-title"><strong>Frequently asked</strong> <em>questions</em></h2>
+      <p class="faq-sub">Everything you need to know about us.</p>
+    </div>
+  </div>
+
+  <div class="faq-container">
+  <div class="faq-body">
+    <div class="faq-list">
+
+      <div class="faq-item open">
+        <button class="faq-q" aria-expanded="true">
+          <span class="faq-q-text">Do you offer home delivery and what is the cost?</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Yes, we offer home delivery for all our products. We use the Uber and Rapido apps to arrange delivery to your doorstep. Please note that the delivery fee is paid by the customer and is calculated based on the distance from our store.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">What is the shelf life of your oil and flour?</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">To ensure the highest quality, our edible oils have a shelf life of 6–9 months. For our freshly milled atta (flour), we recommend consumption within 3 months to maintain its natural nutritional value and freshness.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">What are your store operating hours?</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Our store is open daily from 8:30 AM to 10:00 PM. You can visit us or place your delivery orders at any time during these hours.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Can I request customized milling for my flour?</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Yes! We offer customised milling options for our flour. You can specify your preferred texture or grain mix to get fresh atta tailored to your dietary needs.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span class="faq-q-text">Are your products certified and free from chemicals?</span>
+          <span class="faq-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-a"><p class="faq-a-inner">Absolutely. All our products are FSSAI certified, ensuring they meet strict safety standards. We provide 100% pure food with no added preservatives or artificial colours.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Still have questions CTA -->
+  <div class="faq-container">
+    <div class="faq-cta-wrap">
+      <div class="faq-cta">
+        <div class="faq-avatars">
+          <div class="faq-av" style="left:0"><img src="assets/av-man1.webp" alt="Team member" loading="lazy"></div>
+          <div class="faq-av faq-av-c"><img src="assets/av-woman.webp" alt="Team member" loading="lazy"></div>
+          <div class="faq-av" style="left:72px"><img src="assets/av-man2.webp" alt="Team member" loading="lazy"></div>
+        </div>
+        <div class="faq-cta-text">
+          <p class="faq-cta-h">Still have questions?</p>
+          <p class="faq-cta-p">Can't find the answer you're looking for? Please call us on <strong>+91 98188 02003</strong>.</p>
+        </div>
+        <a href="https://wa.me/917827190611" class="faq-cta-btn" target="_blank" rel="noopener">Get in touch</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 <!-- ═══════════════ FOOTER ════════════════════════════ -->
 <footer>
-  <div class="ft-ellipse" aria-hidden="true"></div>
-
   <div class="ft-main">
     <!-- Left: Logo -->
     <div class="ft-col-left">
@@ -921,27 +1209,27 @@ footer{
       <p class="ft-col-title">Follow us</p>
       <div class="ft-social-row">
         <a href="#" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
+          <picture><source srcset="assets/basil_instagram-solid.webp" type="image/webp"><img src="assets/basil_instagram-solid.png" alt="Instagram"></picture>
         </a>
         <a href="https://wa.me/917827190611" aria-label="WhatsApp" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
+          <picture><source srcset="assets/ri_whatsapp-fill.webp" type="image/webp"><img src="assets/ri_whatsapp-fill.png" alt="WhatsApp"></picture>
+        </a>
+        <a href="https://www.google.com/maps/dir//Shivam+Flour+%26+Oil+Mill-Natural+Seed+Enterprises(Shivam+Atta+Chakki),+44,+B+Block,+near+Shiv+Mandir,+opposite+Sector+10B,+Saraswati+Enclave,+Sector+10B,+Sector+37,+Gurugram,+Haryana+122006/@28.4532461,76.9988664,3965m/data=!3m2!1e3!4b1!4m8!4m7!1m0!1m5!1m1!1s0x390d17dcbb1ded31:0x4c2057319f11328!2m2!1d76.9966157!2d28.4449812?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" aria-label="Location" target="_blank" rel="noopener">
+          <img src="assets/tdesign_location-filled.svg" alt="Location" width="28" height="28">
         </a>
       </div>
     </div>
   </div>
 
   <div class="ft-bottom">
-    <p class="ft-copy">© 2026 All rights reserved.</p>
     <span class="ft-cert">✓ FSSAI certified</span>
+    <p class="ft-copy">© 2026 All rights reserved.</p>
   </div>
 
-  <p class="ft-watermark" aria-hidden="true">naturalseed</p>
+  <div class="ft-watermark" aria-hidden="true">
+    <img src="assets/logo footrer.svg" alt="">
+  </div>
+
 </footer>
 
 <!-- Mobile drawer -->
@@ -1105,11 +1393,9 @@ footer{
   const ingrTitle = document.getElementById('ingrTitle');
   if (ingrTitle) {
     ingrTitle.classList.add('is-split');
-    const ingrColors = ['#AED9A9','#7EB079','#558E4F','#387531','#437F3D'];
-    ingrTitle.querySelectorAll('.word').forEach((w, i) => {
-      const c = ingrColors[i] ?? '#387531';
-      w.style.setProperty('-webkit-text-fill-color', c);
-      w.style.color = c;
+    ingrTitle.querySelectorAll('.word').forEach((w) => {
+      w.style.removeProperty('-webkit-text-fill-color');
+      w.style.color = '#4C8444';
     });
   }
 
@@ -1169,14 +1455,69 @@ footer{
   if (prodTitle) {
     splitWords(prodTitle);
     prodTitle.classList.add('is-split');
-    const prodColors = ['#AED9A9','#7EB079','#558E4F','#387531','#9BC996','#6BA066'];
-    prodTitle.querySelectorAll('.word').forEach((w, i) => {
-      const c = prodColors[i] ?? '#387531';
-      w.style.setProperty('-webkit-text-fill-color', c);
-      w.style.color = c;
+    prodTitle.querySelectorAll('.word').forEach((w) => {
+      w.style.removeProperty('-webkit-text-fill-color');
+      w.style.color = '#4C8444';
     });
     splitRevealIO.observe(prodTitle);
   }
+
+/* ── FAQ ACCORDION ── */
+var MINUS_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+var PLUS_SVG='<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="9.25" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.closest('.faq-item');
+    var isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el){
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+      el.querySelector('.faq-icon').innerHTML=PLUS_SVG;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+      btn.querySelector('.faq-icon').innerHTML=MINUS_SVG;
+    }
+  });
+});
+
+/* ── COUNT-UP ANIMATION ── */
+(function(){
+  const statEls = document.querySelectorAll('.rev-stat-num[data-count]');
+  if(!statEls.length) return;
+
+  function animateCount(el){
+    const target   = parseFloat(el.dataset.count);
+    const suffix   = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals) || 0;
+    const duration = 1800;
+    const start    = performance.now();
+
+    function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
+
+    function tick(now){
+      const elapsed  = Math.min(now - start, duration);
+      const progress = easeOut(elapsed / duration);
+      const current  = target * progress;
+      el.textContent = current.toFixed(decimals) + suffix;
+      if(elapsed < duration) requestAnimationFrame(tick);
+      else el.textContent = target.toFixed(decimals) + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        animateCount(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statEls.forEach(function(el){ io.observe(el); });
+})();
 </script>
 </body>
 </html>
